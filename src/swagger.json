@@ -3,8 +3,8 @@
   "swagger": "2.0",
   "info": {
     "version": "1.0.0",
-    "title": "Node Express Template -> (NET.ts) ",
-    "description": "Node.js NET.ts RESTful API",
+    "title": "College Application Backend",
+    "description": "Fiverr for college students",
     "license": {
       "name": "MIT",
       "url": "https://opensource.org/licenses/MIT"
