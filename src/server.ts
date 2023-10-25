@@ -7,7 +7,7 @@ import errorHandler from 'core/utils/errorHandler';
 const { port } = config;
 
 const server: Server = app.listen(port, (): void => {
-  logger.info(`Aapplication listens on PORT: ${port}`);
+  logger.info(`Application listens on PORT: ${port}`);
 });
 
 const exitHandler = (): void => {
