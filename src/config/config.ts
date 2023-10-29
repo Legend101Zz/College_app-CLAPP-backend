@@ -38,4 +38,5 @@ export default {
   env: envVars.NODE_ENV,
   port: envVars.PORT,
   xApiKey: envVars.API_KEY_TOKEN,
+  mongoUri: envVars.MONGODB_URI,
 };
