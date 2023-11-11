@@ -34,6 +34,70 @@ If you want to run Backend "standard way" using the `npm` instead of `docker-com
 Note: you need to set env variables defined in `.env.local` file.
 On mac OS you can use `export $(cat .env.local)` to export all env variables from the .env.local file.
 
+### To avoid running the `export $(cat .env.local)` command again and again
+
+You can avoid running the export $(cat .env.local) command every time you open a new terminal session by adding it to your shell's profile or configuration file. This way, it will be executed automatically whenever you start a new terminal session.
+
+If you want to avoid running the `export $(cat .env.local)` command every time you open a new terminal session, you can automate it by adding the command to your shell's profile or configuration file. This ensures that it will be executed automatically whenever you start a new terminal session.
+
+### Bash Users
+
+1. Open your Bash configuration file in a text editor:
+
+   ```bash
+   nano ~/.bashrc
+   ```
+
+   Or for macOS users:
+
+   ```bash
+   nano ~/.bash_profile
+   ```
+
+2. Add the following line to the end of the file, replacing `path/to/your/project/` with the actual path to your project:
+
+   ```bash
+   export $(cat path/to/your/project/.env.local)
+   ```
+
+3. Save the file and exit the text editor.
+
+4. Restart your terminal or run the following command to apply the changes:
+
+   ```bash
+   source ~/.bashrc  # for Bash
+   ```
+
+   Or for macOS users:
+
+   ```bash
+   source ~/.bash_profile
+   ```
+
+### Zsh Users
+
+1. Open your Zsh configuration file in a text editor:
+
+   ```bash
+   nano ~/.zshrc
+   ```
+
+2. Add the following line to the end of the file, replacing `path/to/your/project/` with the actual path to your project:
+
+   ```bash
+   export $(cat path/to/your/project/.env.local)
+   ```
+
+3. Save the file and exit the text editor.
+
+4. Restart your terminal or run the following command to apply the changes:
+
+   ```bash
+   source ~/.zshrc
+   ```
+
+Now, every time you open a new terminal session or navigate into your project directory, the environment variables from the `.env.local` file should be automatically exported.
+
 Install dependencies:
 
 ```

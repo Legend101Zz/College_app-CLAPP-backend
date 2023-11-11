@@ -5,8 +5,8 @@ import {
   read,
   update,
   deleteById,
-} from '@components/user/user.service';
-import { IUser } from '@components/user/user.interface';
+} from '@components/dummy-for-ref/user.service';
+import { IUser } from '@components/dummy-for-ref/user.interface';
 
 const createUser = (req: Request, res: Response) => {
   const user = req.body as IUser;
