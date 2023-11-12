@@ -118,6 +118,10 @@ There are few rules that you have to obey .
 2. Structure your solution by components.
 3. Define your routung inside `api.ts` fiile.
 4. Describe your newly created API inside `swagger.json` file
+5. In the components folder the apps component has all the main working components of our server and components other than app are used as packages or utilities to add other features to our application 
+6. Define utilities (like email-service,cloudinary stuff ,etc here ), middlewares and typescript interfaces in the core folder in src directory 
+7. Don't make changes in config folder 
+8. Don't install any new packages without a proper discussion as that lead to package conflicts 
 
 ## Testing
 
