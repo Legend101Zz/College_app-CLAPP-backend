@@ -12,8 +12,8 @@ interface ITaker {
 type UserRoles = UserRole[]; // Array of roles
 
 type UserProps = {
-  [UserRole.Giver]: Giver;
-  [UserRole.Taker]: Taker;
+  [UserRole.Giver]: IGiver;
+  [UserRole.Taker]: ITaker;
 };
 
 export interface IUser {
