@@ -9,23 +9,17 @@ interface ITaker {
   check: boolean;
   takerId: mongoose.Schema.Types.ObjectId;
 }
-type UserRoles = UserRole[]; // Array of roles
 
-type UserProps = {
-  [UserRole.Giver]: IGiver;
-  [UserRole.Taker]: ITaker;
-};
+type UserRole = 'normal' | 'giver' | 'taker';
 
 export interface IUser {
   _id: mongoose.Schema.Types.ObjectId;
-  username: String;
-  email: String;
-  password?: String;
-  googleId: String;
-  isGiver?: { check: Boolean; giverId: mongoose.Schema.Types.ObjectId };
-  isTaker?: { check: Boolean; takerId: mongoose.Schema.Types.ObjectId };
-  role: UserRoles;
-  phone?: String;
+  username: string;
+  email: string;
+  password?: string;
+  googleId: string;
+  isGiver?: IGiver;
+  isTaker?: ITaker;
+  phone?: string;
+  userRoles: UserRole[];
 }
-
-// to do add roles array and add mongoose functions to implement this
