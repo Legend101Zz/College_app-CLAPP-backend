@@ -1,7 +1,7 @@
 import { Router } from 'express';
 
 import healthCheck from '@components/healthcheck/healthCheck.router';
-import user from '@components/dummy-for-ref/user.router';
+import user from '@components/app/user/user.router';
 
 const router: Router = Router();
 router.use(healthCheck);
