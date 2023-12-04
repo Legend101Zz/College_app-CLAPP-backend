@@ -38,7 +38,7 @@ const getUserData = async (req: Request, res: Response) => {
 const updateUserData = async (req: Request, res: Response): Promise<void> => {
   try {
     const userId = req.params.id;
-    const updateObject = req.body; // Assuming the request body contains the fields to update
+    const updateObject = req.body.update; // Assuming the request body contains the fields to update
 
     // Call the service to update user details
     const updatedUser = await update(userId, updateObject);
