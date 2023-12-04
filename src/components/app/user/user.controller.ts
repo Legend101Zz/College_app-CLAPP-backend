@@ -4,9 +4,9 @@ import logger from '@core/utils/logger';
 import { read, UserIncludeFields } from '@components/app/user/user.service';
 import { IUser } from './user.interface';
 
-const getUserData = (req: Request, res: Response) => {
+const getUserData = async (req: Request, res: Response) => {
   // getting userId from params
-  const userId = req.params.id;
+  const userId: number = parseInt(req.params.id, 10);
   const options = req.query;
 
   try {
@@ -16,7 +16,7 @@ const getUserData = (req: Request, res: Response) => {
       : undefined;
 
     // Use the userService read function
-    const userData = await userService.read(userId, includeFields);
+    const userData = await read(userId, includeFields);
 
     // Send the user data as a response with OK status (200)
     res.status(httpStatus.OK).json(userData);
@@ -30,3 +30,6 @@ const getUserData = (req: Request, res: Response) => {
       .json({ error: 'Internal Server Error' });
   }
 };
+
+// eslint-disable-next-line import/prefer-default-export
+export { getUserData };
