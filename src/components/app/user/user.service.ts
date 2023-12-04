@@ -1,11 +1,9 @@
-// import AppError from '@core/utils/appError';
-// import logger from '@core/utils/logger';
-// import httpStatus from 'http-status';
 import { IUser } from './user.interface';
 import User from './user.model';
 
-// this service reads the user data and uses query to get specific data if needed
+// ============ READ SERVICE ============
 
+// this service reads the user data and uses query to get specific data if needed
 type UserIncludeFields = Array<keyof IUser> | Array<IUser>;
 const read = async (
   userId: number,
@@ -31,6 +29,8 @@ const read = async (
 
   return userObject as Partial<IUser>;
 };
+
+// ============ UPDATE SERVICE ============
 
 // Service function to update user details
 // Define the type for the update object
@@ -74,6 +74,8 @@ const update = async (
   }
 };
 
+// ============ DELETE SERVICE ============
+
 const deleteUserById = async (userId: String): Promise<void> => {
   try {
     // Find the user by userId
@@ -90,5 +92,5 @@ const deleteUserById = async (userId: String): Promise<void> => {
     throw new Error(`Error deleting user: ${error.message}`);
   }
 };
-// eslint-disable-next-line import/prefer-default-export
+
 export { read, UserIncludeFields, update, deleteUserById };

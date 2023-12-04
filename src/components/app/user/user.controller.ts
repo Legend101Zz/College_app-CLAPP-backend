@@ -5,9 +5,8 @@ import {
   read,
   UserIncludeFields,
   update,
+  deleteUserById,
 } from '@components/app/user/user.service';
-
-import { IUser } from './user.interface';
 
 const getUserData = async (req: Request, res: Response) => {
   // getting userId from params
@@ -57,5 +56,26 @@ const updateUserData = async (req: Request, res: Response): Promise<void> => {
   }
 };
 
+const deleteUserData = async (req: Request, res: Response): Promise<void> => {
+  try {
+    // Extract userId from request parameters
+    const userId = req.params.id;
+
+    // Call the service to delete the user
+    await deleteUserById(userId);
+
+    // Send a success response with No Content status (204)
+    res.status(httpStatus.NO_CONTENT).end();
+  } catch (error) {
+    // Handle any errors that occur during the process
+    logger.error(error);
+
+    // Send an Internal Server Error response with status code 500
+    res
+      .status(httpStatus.INTERNAL_SERVER_ERROR)
+      .json({ error: 'Internal Server Error' });
+  }
+};
+
 // eslint-disable-next-line import/prefer-default-export
-export { getUserData, updateUserData };
+export { getUserData, updateUserData, deleteUserData };
