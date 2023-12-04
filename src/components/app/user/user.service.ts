@@ -1,6 +1,7 @@
 // import AppError from '@core/utils/appError';
 // import logger from '@core/utils/logger';
 // import httpStatus from 'http-status';
+import mongoose from 'mongoose';
 import { IUser } from './user.interface';
 import User from './user.model';
 
@@ -32,6 +33,48 @@ const read = async (
   return userObject as Partial<IUser>;
 };
 
+// Service function to update user details
+// Define the type for the update object
+type UserUpdate = {
+  [key in keyof IUser]?: IUser[key];
+};
+
+const update = async (
+  userId: mongoose.Types.ObjectId,
+  updateObject: UserUpdate,
+): Promise<IUser> => {
+  // Ensure that the updateObject is not empty
+  if (Object.keys(updateObject).length === 0) {
+    throw new Error('Update object cannot be empty.');
+  }
+
+  try {
+    // Update user fields based on the updateObject using updateOne
+    const result = await User.updateOne(
+      { _id: userId },
+      { $set: updateObject },
+    );
+
+    // Check if the update was successful
+    if (result.modifiedCount === 0) {
+      throw new Error('User not found or no fields were modified.');
+    }
+
+    // Fetch the updated user document
+    const updatedUser = await User.findById(userId);
+
+    // If the user is not found, throw an error
+    if (!updatedUser) {
+      throw new Error('User not found after update.');
+    }
+
+    const userObject = updatedUser.toObject();
+    return userObject as IUser;
+  } catch (error) {
+    throw new Error(`Error updating user details: ${error.message}`);
+  }
+};
+
 // const update = (user: IUser): boolean => {
 //   userStorage = userStorage.map((u) =>
 //     u.id === user.id ? { ...u, updatedField: 1 } : u,
@@ -46,4 +89,4 @@ const read = async (
 // };
 
 // eslint-disable-next-line import/prefer-default-export
-export { read, UserIncludeFields };
+export { read, UserIncludeFields, update };
