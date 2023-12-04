@@ -1,7 +1,6 @@
 // import AppError from '@core/utils/appError';
 // import logger from '@core/utils/logger';
 // import httpStatus from 'http-status';
-import mongoose from 'mongoose';
 import { IUser } from './user.interface';
 import User from './user.model';
 
@@ -40,7 +39,7 @@ type UserUpdate = {
 };
 
 const update = async (
-  userId: mongoose.Types.ObjectId,
+  userId: String,
   updateObject: UserUpdate,
 ): Promise<IUser> => {
   // Ensure that the updateObject is not empty
@@ -75,18 +74,21 @@ const update = async (
   }
 };
 
-// const update = (user: IUser): boolean => {
-//   userStorage = userStorage.map((u) =>
-//     u.id === user.id ? { ...u, updatedField: 1 } : u,
-//   );
-//   return true;
-// };
+const deleteUserById = async (userId: String): Promise<void> => {
+  try {
+    // Find the user by userId
+    const user = await User.findById(userId);
 
-// const deleteById = (id: string) => {
-//   userStorage = userStorage.filter((user) => user.id !== id);
-//   logger.debug(`User ${id} has been removed`);
-//   return true;
-// };
+    // If the user is not found, throw an error
+    if (!user) {
+      throw new Error('User not found.');
+    }
 
+    // Delete the user
+    await user.deleteOne();
+  } catch (error) {
+    throw new Error(`Error deleting user: ${error.message}`);
+  }
+};
 // eslint-disable-next-line import/prefer-default-export
-export { read, UserIncludeFields, update };
+export { read, UserIncludeFields, update, deleteUserById };
