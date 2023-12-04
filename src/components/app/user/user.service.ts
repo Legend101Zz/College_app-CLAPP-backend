@@ -1,12 +1,12 @@
-import AppError from '@core/utils/appError';
-import logger from '@core/utils/logger';
-import httpStatus from 'http-status';
+// import AppError from '@core/utils/appError';
+// import logger from '@core/utils/logger';
+// import httpStatus from 'http-status';
 import { IUser } from './user.interface';
 import User from './user.model';
-import { assert } from 'console';
+
 // this service reads the user data and uses query to get specific data if needed
 
-type UserIncludeFields = Array<keyof IUser>;
+type UserIncludeFields = Array<keyof IUser> | Array<IUser>;
 const read = async (
   userId: number,
   includeFields?: UserIncludeFields,
@@ -32,17 +32,18 @@ const read = async (
   return userObject as Partial<IUser>;
 };
 
-const update = (user: IUser): boolean => {
-  userStorage = userStorage.map((u) =>
-    u.id === user.id ? { ...u, updatedField: 1 } : u,
-  );
-  return true;
-};
+// const update = (user: IUser): boolean => {
+//   userStorage = userStorage.map((u) =>
+//     u.id === user.id ? { ...u, updatedField: 1 } : u,
+//   );
+//   return true;
+// };
 
-const deleteById = (id: string) => {
-  userStorage = userStorage.filter((user) => user.id !== id);
-  logger.debug(`User ${id} has been removed`);
-  return true;
-};
+// const deleteById = (id: string) => {
+//   userStorage = userStorage.filter((user) => user.id !== id);
+//   logger.debug(`User ${id} has been removed`);
+//   return true;
+// };
 
-export { create, read, update, deleteById };
+// eslint-disable-next-line import/prefer-default-export
+export { read, UserIncludeFields };
