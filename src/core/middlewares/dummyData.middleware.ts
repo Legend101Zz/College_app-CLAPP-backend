@@ -116,4 +116,43 @@ const addDummyDataByrenderFormMiddleware =
     res.send(formHtml);
   };
 
-export { addDummyDataByrenderFormMiddleware, addDummyDataMiddleware };
+interface CreateEntityOptions<T extends Document> {
+  model: mongoose.Model<T>;
+  interfaceType: Schema<T>;
+  omitFields?: (keyof T)[];
+}
+
+const createEntityMiddleware =
+  <T extends Document>({
+    model,
+    interfaceType,
+    omitFields = [],
+  }: CreateEntityOptions<T>) =>
+  async (req: Request, res: Response, next: Function) => {
+    try {
+      console.log(req.body);
+      const entityData: Partial<T> = {};
+      Object.keys(interfaceType.obj).forEach((field) => {
+        // eslint-disable-next-line security/detect-object-injection
+        if (!omitFields.includes(field as keyof T) && req.body[field]) {
+          // eslint-disable-next-line security/detect-object-injection
+          entityData[field as keyof T] = req.body[field];
+        }
+      });
+
+      // eslint-disable-next-line new-cap
+      const newEntity = new model(entityData);
+      await newEntity.save();
+
+      next();
+    } catch (error) {
+      logger.error('Error creating entity:', error);
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+  };
+
+export {
+  addDummyDataByrenderFormMiddleware,
+  addDummyDataMiddleware,
+  createEntityMiddleware,
+};
