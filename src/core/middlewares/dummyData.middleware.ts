@@ -25,12 +25,7 @@ const addDummyDataMiddleware =
           await model.insertMany(dummyData);
           logger.debug('Dummy data added to MongoDB.');
         }
-      } else {
-        res
-          .status(200)
-          .json({ error: 'please add dummy data or use another middleware' });
       }
-
       // Continue to the next middleware or route handler
       next();
     } catch (error) {
