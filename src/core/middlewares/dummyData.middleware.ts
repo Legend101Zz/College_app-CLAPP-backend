@@ -99,7 +99,7 @@ const addDummyDataByrenderFormMiddleware =
         cursor: pointer;
       }
     </style>
-    <form action="/submit-form" method="post">
+    <form action="${req.originalUrl}" method="post">
       ${formFields
         .map(
           (field) => `
