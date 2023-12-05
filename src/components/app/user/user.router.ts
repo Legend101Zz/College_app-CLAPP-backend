@@ -11,11 +11,7 @@ router.get(
   [protectedByApiKey, validation(getUserDataValidation)],
   getUserData,
 );
-router.put(
-  '/user/update/:id',
-  [protectedByApiKey, validation(getUserDataValidation)],
-  updateUserData,
-);
+router.put('/user/update/:id', [protectedByApiKey], updateUserData);
 router.delete('/user/:id', [protectedByApiKey], deleteUserData);
 
 export default router;

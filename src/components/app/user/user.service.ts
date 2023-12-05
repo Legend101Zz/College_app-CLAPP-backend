@@ -4,6 +4,7 @@ import User from './user.model';
 // ============ READ SERVICE ============
 
 // this service reads the user data and uses query to get specific data if needed
+
 type UserIncludeFields = Array<keyof IUser> | Array<IUser>;
 const read = async (
   userId: number,
