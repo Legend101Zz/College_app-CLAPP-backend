@@ -1,5 +1,4 @@
 import express, { Application } from 'express';
-
 import api from 'api';
 import httpContext from 'express-http-context';
 import consts from '@config/consts';
