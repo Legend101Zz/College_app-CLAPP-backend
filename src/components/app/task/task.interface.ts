@@ -11,6 +11,6 @@ interface AdditionalFields {
   [key: string]: string;
 }
 
-export interface Task extends CommonTaskFields, Document {
+export interface ITask extends CommonTaskFields, Document {
   additionalFields: AdditionalFields;
 }
