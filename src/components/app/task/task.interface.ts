@@ -1,13 +1,13 @@
 import { Document } from 'mongoose';
 
-interface CommonTaskFields {
+export interface CommonTaskFields {
   title: string;
   description: string;
   category: 'content' | 'web' | 'video' | 'assignment' | 'design';
   deadline: Date;
 }
 
-interface AdditionalFields {
+export interface AdditionalFields {
   [key: string]: string;
 }
 
