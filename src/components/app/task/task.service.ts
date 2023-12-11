@@ -17,7 +17,7 @@ const createTask = async (taskInput: CreateTaskInput): Promise<ITask> => {
     return savedTask;
   } catch (error) {
     // Handle errors
-    throw new Error('Error creating task: ' + error.message);
+    throw new Error(`Error creating task: ${error.message}`);
   }
 };
 
