@@ -9,7 +9,7 @@ export interface ITasks {
 }
 export interface IWallet {
   walletId: mongoose.Schema.Types.ObjectId;
-  // walletName: string;
+  walletName: string;
 }
 export interface IGiver extends Document {
   _id: mongoose.Schema.Types.ObjectId;

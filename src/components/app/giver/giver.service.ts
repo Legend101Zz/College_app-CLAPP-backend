@@ -24,7 +24,7 @@ const registerGiver = async (userId: string): Promise<IGiver> => {
     // Create a new giver
     const newGiver: IGiver = new GiverModel({
       Badge: {
-        category: 'Default',
+        category: 'rookie',
       },
       ResponseTime: 0,
       Wallet: [],

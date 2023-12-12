@@ -10,7 +10,7 @@ const GiverSchema: Schema<IGiver> = new Schema({
     },
   },
   ResponseTime: { type: Number },
-  Wallet: { type: mongoose.Schema.Types.ObjectId, ref: 'Wallet' },
+  Wallet: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Wallet' }],
   Tasks: [
     {
       taskId: { type: mongoose.Schema.Types.ObjectId, ref: 'Task' },
@@ -20,5 +20,5 @@ const GiverSchema: Schema<IGiver> = new Schema({
   userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
 });
 
-const GiverModel = mongoose.model<IGiver>('Doer', GiverSchema);
+const GiverModel = mongoose.model<IGiver>('Giver', GiverSchema);
 export default GiverModel;
