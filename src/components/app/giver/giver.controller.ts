@@ -71,10 +71,68 @@ const deleteTaskController = async (req: Request, res: Response) => {
   }
 };
 
-// export default deleteTaskController;
+const updateGiverusingGiverIdCon = async (req: Request, res: Response) => {
+  try {
+    const { giverId } = req.params; // Assuming the giverId is in the URL parameters
+    const updateData = req.body; // Assuming the update data is in the request body
+
+    // Ensure that giverId and updateData are provided
+    if (!giverId || !updateData) {
+      res
+        .status(httpStatus.BAD_REQUEST)
+        .json({ error: 'giverId and updateData are required parameters' });
+      return;
+    }
+
+    // Update the giver using the service function
+    const updatedGiver = await giverService.updateGiverusingGiverId(
+      giverId,
+      updateData,
+    );
+
+    // Send the updated giver as the response
+    res.status(httpStatus.OK).json(updatedGiver);
+  } catch (error) {
+    // console.error(error); // Log the error for debugging purposes
+    throw new Error(`Error deleting task: ${error.message}`);
+    // res.status(httpStatus.INTERNAL_SERVER_ERROR).json({ error: 'Internal Server Error' });
+  }
+};
+
+const updateGiverusingUserIdCon = async (req: Request, res: Response) => {
+  try {
+    const { userId } = req.params; // Assuming the userId is in the URL parameters
+    const updateData = req.body; // Assuming the update data is in the request body
+
+    // Ensure that userId and updateData are provided
+    if (!userId || !updateData) {
+      res
+        .status(httpStatus.BAD_REQUEST)
+        .json({ error: 'userId and updateData are required parameters' });
+      return;
+    }
+
+    // Update the giver using the service function
+    const updatedGiver = await giverService.updateGiverusingUserId(
+      userId,
+      updateData,
+    );
+
+    // Send the updated giver as the response
+    res.status(httpStatus.OK).json(updatedGiver);
+  } catch (error) {
+    throw new Error(error.message); // Log the error for debugging purposes
+  }
+};
 
 const glatRoute = async (req: Request, res: Response) => {
   res.send('Oye Chote nunu waale, sahit route pe jaa yeh glat hai');
 };
 
-export { registerGiverController, deleteTaskController, glatRoute };
+export {
+  registerGiverController,
+  deleteTaskController,
+  glatRoute,
+  updateGiverusingGiverIdCon,
+  updateGiverusingUserIdCon,
+};

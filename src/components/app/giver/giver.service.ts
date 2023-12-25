@@ -83,7 +83,51 @@ const deleteGiverTask = async (
   }
 };
 
+const updateGiverusingGiverId = async (
+  giverId: string,
+  updateData: any,
+): Promise<IGiver> => {
+  try {
+    const updatedGiver = await GiverModel.findByIdAndUpdate(
+      giverId,
+      { $set: updateData },
+      { new: true },
+    );
+
+    if (!updatedGiver) {
+      throw new Error('Giver not found for updating');
+    }
+
+    return updatedGiver;
+  } catch (error) {
+    throw new Error(`Error updating giver: ${error.message}`);
+  }
+};
+
+const updateGiverusingUserId = async (
+  userId: string,
+  updateData: any,
+): Promise<IGiver> => {
+  try {
+    const updatedGiver = await GiverModel.findOneAndUpdate(
+      { userId },
+      { $set: updateData },
+      { new: true },
+    );
+
+    if (!updatedGiver) {
+      throw new Error('Giver not found for updating');
+    }
+
+    return updatedGiver;
+  } catch (error) {
+    throw new Error(`Error updating giver: ${error.message}`);
+  }
+};
+
 export default {
   registerGiver,
   deleteGiverTask,
+  updateGiverusingGiverId,
+  updateGiverusingUserId,
 };
