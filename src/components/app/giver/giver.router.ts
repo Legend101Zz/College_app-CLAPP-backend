@@ -8,7 +8,7 @@ import {
   updateGiverusingGiverIdCon,
   updateGiverusingUserIdCon,
   getGiverByGiverIdCon,
-  getGiverByUserIdCon
+  getGiverByUserIdCon,
 } from './giver.controller';
 
 const router: Router = Router();
