@@ -5,7 +5,6 @@ export interface IBadge {
 }
 export interface ITasks {
   taskId: mongoose.Schema.Types.ObjectId;
-  taskName: string;
 }
 export interface IWallet {
   walletId: mongoose.Schema.Types.ObjectId;
@@ -16,6 +15,6 @@ export interface IGiver extends Document {
   Badge: IBadge;
   ResponseTime: number;
   Wallet: IWallet;
-  Tasks: ITasks;
+  Tasks: ITasks[];
   userId: mongoose.Schema.Types.ObjectId;
 }

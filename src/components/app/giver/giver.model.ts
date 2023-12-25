@@ -14,7 +14,6 @@ const GiverSchema: Schema<IGiver> = new Schema({
   Tasks: [
     {
       taskId: { type: mongoose.Schema.Types.ObjectId, ref: 'Task' },
-      taskName: { type: String },
     },
   ],
   userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
