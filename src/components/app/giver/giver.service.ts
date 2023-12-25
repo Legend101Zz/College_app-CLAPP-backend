@@ -125,9 +125,31 @@ const updateGiverusingUserId = async (
   }
 };
 
+const getGiverByUserId = async (userId: string): Promise<IGiver | null> => {
+  try {
+    const giver = await GiverModel.findOne({ userId });
+
+    return giver;
+  } catch (error) {
+    throw new Error(`Error getting giver data by userId: ${error.message}`);
+  }
+};
+
+const getGiverByGiverId = async (giverId: string): Promise<IGiver | null> => {
+  try {
+    const giver = await GiverModel.findById(giverId);
+
+    return giver;
+  } catch (error) {
+    throw new Error(`Error getting giver data by giverId: ${error.message}`);
+  }
+};
+
 export default {
   registerGiver,
   deleteGiverTask,
   updateGiverusingGiverId,
   updateGiverusingUserId,
+  getGiverByUserId,
+  getGiverByGiverId,
 };

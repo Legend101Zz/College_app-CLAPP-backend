@@ -125,6 +125,69 @@ const updateGiverusingUserIdCon = async (req: Request, res: Response) => {
   }
 };
 
+const getGiverByUserIdCon = async (req: Request, res: Response) => {
+  try {
+    const { userId } = req.params; // Assuming the userId is in the URL parameters
+
+    // Ensure that userId is provided
+    if (!userId) {
+      res
+        .status(httpStatus.BAD_REQUEST)
+        .json({ error: 'userId is a required parameter' });
+      return;
+    }
+
+    // Get giver data by userId using the service function
+    const giverData = await giverService.getGiverByUserId(userId);
+
+    // If giverData is null, giver not found
+    if (!giverData) {
+      res
+        .status(httpStatus.NOT_FOUND)
+        .json({ error: 'Giver not found for the provided userId' });
+      return;
+    }
+
+    // Send the giver data as the response
+    res.status(httpStatus.OK).json(giverData);
+  } catch (error) {
+    // console.error(error); // Log the error for debugging purposes
+    throw new Error(error.message);
+  }
+};
+
+const getGiverByGiverIdCon = async (req: Request, res: Response) => {
+  try {
+    const { giverId } = req.params; // Assuming the giverId is in the URL parameters
+
+    // Ensure that giverId is provided
+    if (!giverId) {
+      res
+        .status(httpStatus.BAD_REQUEST)
+        .json({ error: 'giverId is a required parameter' });
+      return;
+    }
+
+    // Get giver data by giverId using the service function
+    const giverData = await giverService.getGiverByGiverId(giverId);
+
+    // If giverData is null, giver not found
+    if (!giverData) {
+      res
+        .status(httpStatus.NOT_FOUND)
+        .json({ error: 'Giver not found for the provided giverId' });
+      return;
+    }
+
+    // Send the giver data as the response
+    res.status(httpStatus.OK).json(giverData);
+  } catch (error) {
+    // console.error(error); // Log the error for debugging purposes
+    throw new Error(error.message);
+    // res.status(httpStatus.INTERNAL_SERVER_ERROR).json({ error: 'Internal Server Error' });
+  }
+};
+
 const glatRoute = async (req: Request, res: Response) => {
   res.send('Oye Chote nunu waale, sahit route pe jaa yeh glat hai');
 };
@@ -135,4 +198,6 @@ export {
   glatRoute,
   updateGiverusingGiverIdCon,
   updateGiverusingUserIdCon,
+  getGiverByUserIdCon,
+  getGiverByGiverIdCon,
 };
