@@ -52,4 +52,31 @@ const registerDoerController = async (req: Request, res: Response) => {
   }
 };
 
-export default { registerDoerController };
+const deleteDoerTaskController = async (req: Request, res: Response) => {
+  try {
+    const userId = req.params.userId as string;
+    const taskId = req.params.taskId as string;
+
+    if (!userId || !taskId) {
+      res
+        .status(400)
+        .json({ error: 'userId and taskId are required parameters' });
+      return;
+    }
+
+    const deletedDoer = await doerService.deleteDoerTask(userId, taskId);
+
+    // Check if the task was successfully deleted
+    if (!deletedDoer) {
+      res.status(404).json({ error: 'Task not found' });
+      return;
+    }
+
+    // Send a success response with status code 200
+    res.status(200).json(deletedDoer);
+  } catch (error) {
+    throw new Error(`Error deleting task: ${error.message}`);
+  }
+};
+
+export default { registerDoerController, deleteDoerTaskController };
