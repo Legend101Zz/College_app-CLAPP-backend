@@ -79,4 +79,36 @@ const deleteDoerTaskController = async (req: Request, res: Response) => {
   }
 };
 
-export default { registerDoerController, deleteDoerTaskController };
+const updateDoerUsingUserIdController = async (req: Request, res: Response) => {
+  try {
+    const { userId } = req.params; // Assuming the userId is in the URL parameters
+    const updateData = req.body; // Assuming the update data is in the request body
+
+    // Ensure that userId and updateData are provided
+    if (!userId || !updateData) {
+      res
+        .status(httpStatus.BAD_REQUEST)
+        .json({ error: 'userId and updateData are required parameters' });
+      return;
+    }
+
+    // Update the doer using the service function
+    const updatedDoer = await doerService.updateDoerUsingUserId(
+      userId,
+      updateData,
+    );
+
+    // Send the updated doer as the response
+    res.status(httpStatus.OK).json(updatedDoer);
+  } catch (error) {
+    throw new Error(`Error updating doer: ${error.message}`);
+  }
+};
+
+
+
+export default {
+  registerDoerController,
+  deleteDoerTaskController,
+  updateDoerUsingUserIdController,
+};
