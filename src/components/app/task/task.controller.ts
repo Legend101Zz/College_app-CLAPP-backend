@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import mongoose from 'mongoose';
 import httpStatus from 'http-status';
 import logger from '@core/utils/logger';
 import { createTask, CreateTaskInput, updateTask } from './task.service';
@@ -46,5 +47,28 @@ const createTaskFromRequestBody = async (
   }
 };
 
+const updateTaskController = async (
+  req: Request,
+  res: Response,
+): Promise<void> => {
+  try {
+    // check can cause problem test ......
+    const taskId: mongoose.Types.ObjectId = new mongoose.Types.ObjectId(
+      req.params.id,
+    );
+    const updateObject = req.body;
+
+    // Call the service to update task details
+    const updatedTask = await updateTask(taskId, updateObject);
+
+    res.status(200).json(updatedTask);
+  } catch (error) {
+    logger.error('Error updating task:', error);
+    res
+      .status(httpStatus.INTERNAL_SERVER_ERROR)
+      .json({ error: 'Internal Server Error' });
+  }
+};
+
 // eslint-disable-next-line import/prefer-default-export
-export { createTaskFromRequestBody };
+export { createTaskFromRequestBody, updateTaskController };
