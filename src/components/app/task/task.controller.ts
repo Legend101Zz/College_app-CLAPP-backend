@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
+import httpStatus from 'http-status';
 import logger from '@core/utils/logger';
-import createTask, { CreateTaskInput } from './task.service';
+import { createTask, CreateTaskInput, updateTask } from './task.service';
 
 interface DynamicTaskFields {
   [key: string]: string;
@@ -35,12 +36,13 @@ const createTaskFromRequestBody = async (
     // Create the task
     const createdTask = await createTask(commonTaskFields);
 
-    // Send the created task as a response
     res.status(201).json(createdTask);
   } catch (error) {
     // Handle errors
     logger.error('Error creating task:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    res
+      .status(httpStatus.INTERNAL_SERVER_ERROR)
+      .json({ error: 'Internal Server Error' });
   }
 };
 
