@@ -112,4 +112,19 @@ const updateDoerUsingUserId = async (
   }
 };
 
-export default { registerDoer, deleteDoerTask, updateDoerUsingUserId };
+const getGiverByUserId = async (userId: string): Promise<IDoer | null> => {
+  try {
+    const doer = await Doer.findOne({ userId });
+
+    return doer;
+  } catch (error) {
+    throw new Error(`Error getting giver data by userId: ${error.message}`);
+  }
+};
+
+export default {
+  registerDoer,
+  deleteDoerTask,
+  updateDoerUsingUserId,
+  getGiverByUserId,
+};
