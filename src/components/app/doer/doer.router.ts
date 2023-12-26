@@ -4,6 +4,7 @@ import doerController from './doer.controller';
 const router: Router = Router();
 
 router.post('/doer/:id', doerController.registerDoerController);
+
 router.post(
   '/doer/:userId/tasks/:taskId',
   doerController.deleteDoerTaskController,
@@ -17,4 +18,7 @@ router.get(
   doerController.getDoerByUserIdController,
 );
 
+router.get('/doers', (req, res) => {
+  res.send('doers'); // working fine
+});
 export default router;
