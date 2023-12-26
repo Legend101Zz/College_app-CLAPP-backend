@@ -68,4 +68,48 @@ const registerDoer = async ({
   }
 };
 
-export default { registerDoer };
+const deleteDoerTask = async (
+  userId: string,
+  taskId: string,
+): Promise<IDoer> => {
+  try {
+    const doer = await Doer.findOne({ userId });
+
+    if (!doer) {
+      throw new Error('Doer not found');
+    }
+
+    // Assuming you have a 'Tasks' array with 'taskId' properties in your 'Doer' model
+    doer.Tasks = doer.Tasks.filter((task) => task.taskId.toString() !== taskId);
+
+    // Save the updated doer
+    await doer.save();
+
+    return doer;
+  } catch (error) {
+    throw new Error(`Error deleting task: ${error.message}`);
+  }
+};
+
+const updateDoerUsingUserId = async (
+  userId: string,
+  updateData: any,
+): Promise<IDoer> => {
+  try {
+    const updatedDoer = await Doer.findOneAndUpdate(
+      { userId },
+      { $set: updateData },
+      { new: true },
+    );
+
+    if (!updatedDoer) {
+      throw new Error('Doer not found for updating');
+    }
+
+    return updatedDoer;
+  } catch (error) {
+    throw new Error(`Error updating doer: ${error.message}`);
+  }
+};
+
+export default { registerDoer, deleteDoerTask, updateDoerUsingUserId };
