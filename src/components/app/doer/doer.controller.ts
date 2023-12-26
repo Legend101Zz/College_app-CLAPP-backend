@@ -105,10 +105,39 @@ const updateDoerUsingUserIdController = async (req: Request, res: Response) => {
   }
 };
 
+const getDoerByUserIdController = async (req: Request, res: Response) => {
+  try {
+    const { userId } = req.params; // Assuming the userId is in the URL parameters
 
+    // Ensure that userId is provided
+    if (!userId) {
+      res
+        .status(httpStatus.BAD_REQUEST)
+        .json({ error: 'userId is a required parameter' });
+      return;
+    }
+
+    // Get doer data by userId using the service function
+    const doerData = await doerService.getDoerByUserId(userId);
+
+    // If doerData is null, doer not found
+    if (!doerData) {
+      res
+        .status(httpStatus.NOT_FOUND)
+        .json({ error: 'Doer not found for the provided userId' });
+      return;
+    }
+
+    // Send the doer data as the response
+    res.status(httpStatus.OK).json(doerData);
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};
 
 export default {
   registerDoerController,
   deleteDoerTaskController,
   updateDoerUsingUserIdController,
+  getDoerByUserIdController,
 };

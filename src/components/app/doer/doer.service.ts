@@ -112,7 +112,7 @@ const updateDoerUsingUserId = async (
   }
 };
 
-const getGiverByUserId = async (userId: string): Promise<IDoer | null> => {
+const getDoerByUserId = async (userId: string): Promise<IDoer | null> => {
   try {
     const doer = await Doer.findOne({ userId });
 
@@ -126,5 +126,5 @@ export default {
   registerDoer,
   deleteDoerTask,
   updateDoerUsingUserId,
-  getGiverByUserId,
+  getDoerByUserId,
 };
