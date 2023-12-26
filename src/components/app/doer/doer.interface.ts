@@ -47,7 +47,7 @@ export interface IDoer extends mongoose.Document {
   _id: mongoose.Schema.Types.ObjectId;
   userId: mongoose.Schema.Types.ObjectId;
   FullName: string;
-  Dis_name: string;
+  DisName: string;
   Description: string;
   Skills: ISkills[];
   Education: IEducation;

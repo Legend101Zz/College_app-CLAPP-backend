@@ -13,7 +13,8 @@ const PrimarySkillSchema = new Schema({
 
 const DoerSchema: Schema<IDoer> = new Schema({
   FullName: { type: String, required: true },
-  Dis_name: { type: String, required: true },
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+  DisName: { type: String, required: true },
   Description: { type: String, required: true },
   Skills: [PrimarySkillSchema],
   Education: {

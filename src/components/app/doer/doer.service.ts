@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+// import mongoose from 'mongoose';
 import { User } from '../user/user.model';
 import Doer from './doer.model';
 // import { IDoer } from './doer.interface';
@@ -6,9 +6,9 @@ import { IDoer, ISkills } from './doer.interface';
 import { update } from '../user/user.service';
 
 interface IRegisterDoerParams {
-  userId: mongoose.Schema.Types.ObjectId;
+  userId: string;
   FullName: string;
-  Dis_name: string;
+  DisName: string;
   Description: string;
   Skills: ISkills[];
   Education: string;
@@ -22,7 +22,7 @@ interface IRegisterDoerParams {
 const registerDoer = async ({
   userId,
   FullName,
-  Dis_name,
+  DisName,
   Description,
   Skills,
   Education,
@@ -45,7 +45,7 @@ const registerDoer = async ({
     }
     const newDoer: IDoer = new Doer({
       FullName,
-      Dis_name,
+      DisName,
       Description,
       Skills,
       Education,
