@@ -1,9 +1,16 @@
 import mongoose from 'mongoose';
-import { ITask, CommonTaskFields, AdditionalFields } from './task.interface';
+import {
+  ITask,
+  CommonTaskFields,
+  AdditionalFields,
+  Goal,
+} from './task.interface';
 import TaskModel from './task.model';
 
 export interface CreateTaskInput extends CommonTaskFields {
   additionalFields: AdditionalFields;
+  goals: Goal[];
+  status: 'draft' | 'in progress' | 'done';
 }
 
 const createTask = async (taskInput: CreateTaskInput): Promise<ITask> => {

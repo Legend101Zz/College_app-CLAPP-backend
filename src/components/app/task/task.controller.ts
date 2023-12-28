@@ -8,6 +8,12 @@ interface DynamicTaskFields {
   [key: string]: string;
 }
 
+interface Goal {
+  description: string;
+  expectedTime: Date;
+  status: 'done' | 'not done' | 'in progress';
+}
+
 interface CustomRequest extends Request {
   taskId?: string;
 }
@@ -26,10 +32,12 @@ const createTaskFromRequestBody = async (
       deadline: new Date(req.body.deadline),
       // @ts-ignore
       additionalFields: new Map<string, string>(),
+      goals: [],
+      status: 'draft',
     };
 
     // Extract additional fields specific to that task from req.body
-    const { additionalFields }: DynamicTaskFields = req.body;
+    const { additionalFields, goals, status }: DynamicTaskFields = req.body;
 
     const keys = Object.keys(additionalFields);
 
@@ -40,6 +48,18 @@ const createTaskFromRequestBody = async (
         commonTaskFields.additionalFields[key] = additionalFields[key];
       }
     });
+    // Add goals to the common task fields
+    if (Array.isArray(goals)) {
+      // @ts-ignore
+      commonTaskFields.goals = goals as Goal[];
+    }
+
+    // Set the status in common task fields
+    if (status) {
+      // @ts-ignore
+      commonTaskFields.status = status;
+    }
+
     // Create the task
     const createdTask = await createTask(commonTaskFields);
     req.taskId = createdTask._id;

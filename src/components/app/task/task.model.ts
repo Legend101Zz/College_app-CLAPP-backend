@@ -15,13 +15,19 @@ const taskSchema = new Schema<ITask>({
       expectedTime: { type: Date, required: true },
       status: {
         type: String,
-        enum: ['done', 'not done', 'in progress'],
+        enum: ['done', 'notDone', 'inProgress'],
         default: 'not done',
         required: true,
       },
     },
   ],
 
+  status: {
+    type: String,
+    enum: ['draft', 'inProgress', 'done'],
+    default: 'draft',
+    required: true,
+  },
   deadline: { type: Date, required: true },
   additionalFields: { type: Map, of: String }, // Using Map for additionalFields
 });
