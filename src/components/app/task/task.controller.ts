@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import { Request, Response, NextFunction } from 'express';
 import mongoose from 'mongoose';
 import httpStatus from 'http-status';
 import logger from '@core/utils/logger';
@@ -8,9 +8,14 @@ interface DynamicTaskFields {
   [key: string]: string;
 }
 
+interface CustomRequest extends Request {
+  taskId?: string;
+}
+
 const createTaskFromRequestBody = async (
-  req: Request,
+  req: CustomRequest,
   res: Response,
+  next: NextFunction,
 ): Promise<void> => {
   try {
     // Extract common task fields from req.body
@@ -19,6 +24,7 @@ const createTaskFromRequestBody = async (
       description: req.body.description,
       category: req.body.category,
       deadline: new Date(req.body.deadline),
+      // @ts-ignore
       additionalFields: new Map<string, string>(),
     };
 
@@ -36,8 +42,8 @@ const createTaskFromRequestBody = async (
     });
     // Create the task
     const createdTask = await createTask(commonTaskFields);
-
-    res.status(201).json(createdTask);
+    req.taskId = createdTask._id;
+    next();
   } catch (error) {
     // Handle errors
     logger.error('Error creating task:', error);

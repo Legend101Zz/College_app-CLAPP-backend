@@ -9,6 +9,19 @@ const taskSchema = new Schema<ITask>({
     enum: ['content', 'web', 'video', 'assignment', 'design'],
     required: true,
   },
+  goals: [
+    {
+      description: { type: String, required: true },
+      expectedTime: { type: Date, required: true },
+      status: {
+        type: String,
+        enum: ['done', 'not done', 'in progress'],
+        default: 'not done',
+        required: true,
+      },
+    },
+  ],
+
   deadline: { type: Date, required: true },
   additionalFields: { type: Map, of: String }, // Using Map for additionalFields
 });

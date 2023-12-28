@@ -5,17 +5,22 @@ import httpStatus from 'http-status';
 // Some other module where you use the functions
 import giverService from '@components/app/giver/giver.service';
 
-const registerGiverController = async (req: Request, res: Response) => {
+interface CustomRequest extends Request {
+  taskId?: string;
+}
+
+const registerGiverController = async (req: CustomRequest, res: Response) => {
   try {
     const userId = req.params.id;
     const {
       Badge: { category: badgeCategory },
       ResponseTime,
       Wallet,
-      Tasks,
     } = req.body;
 
-    if (!userId || !badgeCategory || !ResponseTime || !Wallet || !Tasks) {
+    const taskIds = [req.taskId];
+
+    if (!userId || !badgeCategory || !ResponseTime || !Wallet || !taskIds) {
       res.status(httpStatus.BAD_REQUEST).json({
         error:
           'userId, badgeCategory, ResponseTime, Wallet, and Tasks are required parameters',
@@ -23,7 +28,7 @@ const registerGiverController = async (req: Request, res: Response) => {
       return;
     }
 
-    const taskIds = Tasks.map((task: any) => task.taskId);
+    // const taskIds = Tasks.map((task: any) => task.taskId);
 
     const newGiver = await giverService.registerGiver({
       userId,

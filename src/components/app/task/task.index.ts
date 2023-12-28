@@ -1,1 +1,1 @@
-import * as TaskFunc from './task.controller';
+export * from './task.controller';

@@ -11,6 +11,13 @@ export interface AdditionalFields {
   [key: string]: string;
 }
 
+export interface Goal {
+  description: string;
+  expectedTime: Date;
+  status: 'done' | 'not done' | 'in progress';
+}
+
 export interface ITask extends CommonTaskFields, Document {
   additionalFields: AdditionalFields;
+  goals: Goal[];
 }
