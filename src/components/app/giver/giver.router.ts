@@ -10,6 +10,7 @@ import {
   updateGiverusingUserIdCon,
   getGiverByGiverIdCon,
   getGiverByUserIdCon,
+  getGiverData,
 } from './giver.controller';
 
 const router: Router = Router();
@@ -25,5 +26,6 @@ router.put('/giver/updateByUserId/:userId', updateGiverusingUserIdCon);
 router.put('/giver/updateByGiverId/:giverId', updateGiverusingGiverIdCon);
 router.get('/giver/getUsingGiverId/:giverId', getGiverByGiverIdCon);
 router.get('/giver/getUsingUserId/:userId', getGiverByUserIdCon);
+router.get('/giver/getGivers/:giverId', getGiverData);
 
 export default router;

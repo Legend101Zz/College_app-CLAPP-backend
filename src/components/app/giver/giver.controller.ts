@@ -1,9 +1,11 @@
 import { Request, Response } from 'express';
 import httpStatus from 'http-status';
+import giverService from '@components/app/giver/giver.service';
+import { IGiver } from './giver.interface';
 // import logger from '@core/utils/logger';
 // import { registerGiver } from '@components/app/giver/giver.service';
 // Some other module where you use the functions
-import giverService from '@components/app/giver/giver.service';
+// import { GiverIncludeFields } from '@components/app/giver/giver.service';
 
 interface CustomRequest extends Request {
   taskId?: string;
@@ -193,6 +195,44 @@ const getGiverByGiverIdCon = async (req: Request, res: Response) => {
   }
 };
 
+const getGiverData = async (req: Request, res: Response) => {
+  const { giverId } = req.params;
+
+  if (!giverId) {
+    res.status(httpStatus.BAD_REQUEST).json({ error: 'Invalid giverId' });
+    return;
+  }
+
+  try {
+    // Get dynamic fields from the query parameters
+    const dynamicFields: (keyof IGiver)[] | undefined = req.query.fields
+      ? ((req.query.fields as string).split(',') as (keyof IGiver)[])
+      : undefined;
+
+    // console.log('Giver ID:', giverId);
+    // console.log('Dynamic Fields:', dynamicFields);
+
+    // Use the giverService read function with dynamic fields
+    const userData = await giverService.read(giverId, dynamicFields);
+
+    // console.log('User Data:', userData);
+
+    if (!userData) {
+      res.status(httpStatus.NOT_FOUND).json({ error: 'Giver not found' });
+      return;
+    }
+
+    res.status(httpStatus.OK).json(userData);
+  } catch (error) {
+    // console.error('Error in getGiverData:', error);
+    res
+      .status(httpStatus.INTERNAL_SERVER_ERROR)
+      .json({ error: 'Internal Server Error' });
+  }
+};
+
+export default getGiverData;
+
 const glatRoute = async (req: Request, res: Response) => {
   res.send('Oye Chote nunu waale, sahit route pe jaa yeh glat hai');
 };
@@ -205,4 +245,5 @@ export {
   updateGiverusingUserIdCon,
   getGiverByUserIdCon,
   getGiverByGiverIdCon,
+  getGiverData,
 };

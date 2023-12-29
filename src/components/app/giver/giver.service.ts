@@ -145,6 +145,36 @@ const getGiverByGiverId = async (giverId: string): Promise<IGiver | null> => {
   }
 };
 
+type GiverIncludeFields = Array<keyof IGiver> | Array<IGiver>;
+
+const read = async (
+  userId: string,
+  includeFields?: GiverIncludeFields,
+): Promise<Partial<IGiver> | null> => {
+  try {
+    let query = GiverModel.findOne({ userId });
+
+    if (includeFields && includeFields.length > 0) {
+      const fieldProjection: Record<string, 1> = {};
+      includeFields.forEach((field) => {
+        fieldProjection[field as string] = 1;
+      });
+      query = query.select(fieldProjection);
+    }
+
+    // Log the MongoDB query
+    // console.log('MongoDB Query:', query.getQuery());
+
+    const giverData = await query.exec();
+
+    return giverData ? await giverData.toObject() : null;
+  } catch (error) {
+    // console.error('Error in giverService.read:', error);
+    return null;
+  }
+};
+
+export type { GiverIncludeFields };
 export default {
   registerGiver,
   deleteGiverTask,
@@ -152,4 +182,5 @@ export default {
   updateGiverusingUserId,
   getGiverByUserId,
   getGiverByGiverId,
+  read,
 };
