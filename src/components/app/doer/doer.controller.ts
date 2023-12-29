@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 // import mongoose from 'mongoose';
 import httpStatus from 'http-status';
 import doerService from './doer.service';
+import { IDoer } from './doer.interface';
 // import mongoose from 'mongoose';
 
 const registerDoerController = async (req: Request, res: Response) => {
@@ -135,9 +136,48 @@ const getDoerByUserIdController = async (req: Request, res: Response) => {
   }
 };
 
+const getDoerData = async (req: Request, res: Response) => {
+  const { doerId } = req.params;
+
+  if (!doerId) {
+    res.status(httpStatus.BAD_REQUEST).json({ error: 'Invalid giverId' });
+    return;
+  }
+
+  try {
+    // Get dynamic fields from the query parameters
+    const dynamicFields: (keyof IDoer)[] | undefined = req.query.fields
+      ? ((req.query.fields as string).split(',') as (keyof IDoer)[])
+      : undefined;
+
+    // console.log('Giver ID:', giverId);
+    // console.log('Dynamic Fields:', dynamicFields);
+
+    // Use the giverService read function with dynamic fields
+    const userData = await doerService.read(doerId, dynamicFields);
+
+    // console.log('User Data:', userData);
+
+    if (!userData) {
+      res.status(httpStatus.NOT_FOUND).json({ error: 'Giver not found' });
+      return;
+    }
+
+    res.status(httpStatus.OK).json(userData);
+  } catch (error) {
+    // console.error('Error in getGiverData:', error);
+    res
+      .status(httpStatus.INTERNAL_SERVER_ERROR)
+      .json({ error: 'Internal Server Error' });
+  }
+};
+
+// export default getGiverData;
+
 export default {
   registerDoerController,
   deleteDoerTaskController,
   updateDoerUsingUserIdController,
   getDoerByUserIdController,
+  getDoerData,
 };

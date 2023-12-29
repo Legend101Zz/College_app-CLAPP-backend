@@ -122,9 +122,39 @@ const getDoerByUserId = async (userId: string): Promise<IDoer | null> => {
   }
 };
 
+type DoerIncludeFields = Array<keyof IDoer> | Array<IDoer>;
+
+const read = async (
+  userId: string,
+  includeFields?: DoerIncludeFields,
+): Promise<Partial<IDoer> | null> => {
+  try {
+    let query = Doer.findOne({ userId });
+
+    if (includeFields && includeFields.length > 0) {
+      const fieldProjection: Record<string, 1> = {};
+      includeFields.forEach((field) => {
+        fieldProjection[field as string] = 1;
+      });
+      query = query.select(fieldProjection);
+    }
+
+    // Log the MongoDB query
+    // console.log('MongoDB Query:', query.getQuery());
+
+    const DoerData = await query.exec();
+
+    return DoerData ? await DoerData.toObject() : null;
+  } catch (error) {
+    // console.error('Error in giverService.read:', error);
+    return null;
+  }
+};
+
 export default {
   registerDoer,
   deleteDoerTask,
   updateDoerUsingUserId,
   getDoerByUserId,
+  read,
 };
