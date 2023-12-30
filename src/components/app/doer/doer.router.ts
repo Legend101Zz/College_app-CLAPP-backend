@@ -3,13 +3,13 @@ import doerController from './doer.controller';
 
 const router: Router = Router();
 
-router.post('/doer/:id', doerController.registerDoerController);
+router.post('/doer/:id', doerController.registerDoerController); // working fine
 
 router.post(
   '/doer/:userId/tasks/:taskId',
   doerController.deleteDoerTaskController,
-);
-router.put(
+); // working fine
+router.post(
   '/doer/updateByUserId/:userId',
   doerController.updateDoerUsingUserIdController,
 );
