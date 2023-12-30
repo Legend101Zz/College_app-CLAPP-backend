@@ -68,4 +68,20 @@ const updateTask = async (
   }
 };
 
-export { createTask, updateTask };
+const deleteTask = async (taskId: mongoose.Types.ObjectId): Promise<void> => {
+  try {
+    // Find the task by ID and delete it
+    const result = await TaskModel.findByIdAndDelete(taskId);
+
+    // Check if the task was found and deleted
+    if (!result) {
+      throw new Error('Task not found or could not be deleted.');
+    }
+  } catch (error) {
+    // Handle errors
+
+    throw new Error('Internal Server Error');
+  }
+};
+
+export { createTask, updateTask, deleteTask };
