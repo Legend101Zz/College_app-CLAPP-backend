@@ -136,9 +136,9 @@ const getDoerByUserIdController = async (req: Request, res: Response) => {
 
 const getDoerData = async (req: Request, res: Response) => {
   const { doerId } = req.params;
-
+  doerId.toString();
   if (!doerId) {
-    res.status(httpStatus.BAD_REQUEST).json({ error: 'Invalid giverId' });
+    res.status(httpStatus.BAD_REQUEST).json({ error: 'Invalid doerId' });
     return;
   }
 

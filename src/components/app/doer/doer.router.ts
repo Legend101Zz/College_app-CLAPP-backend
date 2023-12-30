@@ -22,6 +22,6 @@ router.get('/doers', (req, res) => {
   res.send('doers'); // working fine
 });
 
-router.get('/doers/getDoers/:doerId', doerController.getDoerData);
+router.get('/doers/getDoers/:doerId', doerController.getDoerData); // working fine
 
 export default router;
