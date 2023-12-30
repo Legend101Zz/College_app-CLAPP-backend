@@ -29,7 +29,12 @@ const DoerSchema: Schema<IDoer> = new Schema({
   },
   LinkedIn: { type: String },
   walletId: { type: mongoose.Schema.Types.ObjectId, ref: 'Wallet' },
-  Tasks: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Task' }],
+  Tasks: [
+    {
+      taskId: { type: mongoose.Schema.Types.ObjectId, ref: 'Task' },
+      // taskName: { type: String },
+    },
+  ],
   Reviews: [
     {
       review: { type: String },

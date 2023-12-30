@@ -47,9 +47,7 @@ const registerDoerController = async (req: Request, res: Response) => {
     res.status(httpStatus.OK).json(newDoer);
   } catch (error) {
     // console.error(error); // Log the error for debugging purposes
-    res
-      .status(httpStatus.INTERNAL_SERVER_ERROR)
-      .json({ error: 'Internal Server Error' });
+    res.status(httpStatus.INTERNAL_SERVER_ERROR).json({ error: error.message });
   }
 };
 
