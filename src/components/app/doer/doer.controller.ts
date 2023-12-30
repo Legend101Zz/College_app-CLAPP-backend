@@ -157,7 +157,7 @@ const getDoerData = async (req: Request, res: Response) => {
     // console.log('User Data:', userData);
 
     if (!userData) {
-      res.status(httpStatus.NOT_FOUND).json({ error: 'Giver not found' });
+      res.status(httpStatus.NOT_FOUND).json({ error: 'Doer not found' });
       return;
     }
 

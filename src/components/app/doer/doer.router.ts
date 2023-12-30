@@ -12,16 +12,16 @@ router.post(
 router.post(
   '/doer/updateByUserId/:userId',
   doerController.updateDoerUsingUserIdController,
-);
+); // working fine
 router.get(
-  '/doer/getUsingDoerId/:doerId',
+  '/doer/getUsingDoerId/:userId',
   doerController.getDoerByUserIdController,
-);
+); // working fine
 
 router.get('/doers', (req, res) => {
   res.send('doers'); // working fine
 });
 
-router.get('/doers/getDoers', doerController.getDoerData);
+router.get('/doers/getDoers/:doerId', doerController.getDoerData);
 
 export default router;
