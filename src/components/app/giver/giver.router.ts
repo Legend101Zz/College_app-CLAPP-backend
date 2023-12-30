@@ -21,7 +21,11 @@ router.post(
   TaskFunc.createTaskFromRequestBody,
   registerGiverController,
 );
-router.post('/giver/:userId/tasks/:taskId', deleteTaskController);
+router.post(
+  '/giver/:userId/tasks/:taskId',
+  TaskFunc.deleteTask,
+  deleteTaskController,
+);
 router.put('/giver/updateByUserId/:userId', updateGiverusingUserIdCon);
 router.put('/giver/updateByGiverId/:giverId', updateGiverusingGiverIdCon);
 router.get('/giver/getUsingGiverId/:giverId', getGiverByGiverIdCon);

@@ -2,7 +2,12 @@ import { Request, Response, NextFunction } from 'express';
 import mongoose from 'mongoose';
 import httpStatus from 'http-status';
 import logger from '@core/utils/logger';
-import { createTask, CreateTaskInput, updateTask } from './task.service';
+import {
+  createTask,
+  CreateTaskInput,
+  updateTask,
+  deleteTask,
+} from './task.service';
 
 interface DynamicTaskFields {
   [key: string]: string;
@@ -96,5 +101,27 @@ const updateTaskController = async (
   }
 };
 
+const deleteTaskController = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+): Promise<void> => {
+  try {
+    const taskId: mongoose.Types.ObjectId = new mongoose.Types.ObjectId(
+      req.params.taskId,
+    );
+
+    // Call the service to delete the task
+    await deleteTask(taskId);
+
+    next();
+  } catch (error) {
+    logger.error('Error deleting task:', error);
+    res
+      .status(httpStatus.INTERNAL_SERVER_ERROR)
+      .json({ error: 'Internal Server Error' });
+  }
+};
+
 // eslint-disable-next-line import/prefer-default-export
-export { createTaskFromRequestBody, updateTaskController };
+export { createTaskFromRequestBody, updateTaskController, deleteTask };
