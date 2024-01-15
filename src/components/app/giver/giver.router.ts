@@ -15,17 +15,22 @@ import {
 
 const router: Router = Router();
 
+// ROUTE TO HANDLE WRONG GIVER ROUTES
 router.get('/giver', glatRoute);
+
+// MAIN ROUTES
 router.post(
   '/giver/:id',
   TaskFunc.createTaskFromRequestBody,
   registerGiverController,
 );
+
 router.post(
   '/giver/:userId/tasks/:taskId',
   TaskFunc.deleteTask,
   deleteTaskController,
 );
+
 router.put('/giver/updateByUserId/:userId', updateGiverusingUserIdCon);
 router.put('/giver/updateByGiverId/:giverId', updateGiverusingGiverIdCon);
 router.get('/giver/getUsingGiverId/:giverId', getGiverByGiverIdCon);

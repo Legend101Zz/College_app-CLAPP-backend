@@ -80,11 +80,16 @@ router.get(
   [protectedByApiKey, validation(getUserDataValidation)],
   getUserData,
 );
-router.put(
+router.post(
   '/user/update/:id',
   [protectedByApiKey, validation(updateUserDataValidation)],
   updateUserData,
 );
-router.delete('/user/:id', [protectedByApiKey], deleteUserData);
+
+// ============USE WITH CAUTION AS ITS DELETE THE ENTIRE USER =========
+
+// eslint-disable-next-line max-len
+// PS: UPDATE THIS SO THAT IF A USER IS DELETED IT'S ASSOCIATED GIVER , WALLET ETC ARE DELETED OR IF LEFT A COLUMN OF OLD/DELETED USER IS ADDED
+router.delete('/user/delete/:id', [protectedByApiKey], deleteUserData);
 
 export default router;

@@ -16,7 +16,7 @@ const taskSchema = new Schema<ITask>({
       status: {
         type: String,
         enum: ['done', 'notDone', 'inProgress'],
-        default: 'not done',
+        default: 'notDone',
         required: true,
       },
     },
