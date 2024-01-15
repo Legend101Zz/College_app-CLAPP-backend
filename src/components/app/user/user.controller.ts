@@ -10,7 +10,7 @@ import {
 
 const getUserData = async (req: Request, res: Response) => {
   // getting userId from params
-  const userId: number = parseInt(req.params.id, 10);
+  const userId = req.params.id;
   const options = req.query;
 
   try {

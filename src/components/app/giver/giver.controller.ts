@@ -231,10 +231,8 @@ const getGiverData = async (req: Request, res: Response) => {
   }
 };
 
-export default getGiverData;
-
 const glatRoute = async (req: Request, res: Response) => {
-  res.send('Oye Chote nunu waale, sahit route pe jaa yeh glat hai');
+  res.send('Wrong route');
 };
 
 export {

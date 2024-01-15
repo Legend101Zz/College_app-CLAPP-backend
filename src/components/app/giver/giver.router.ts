@@ -31,5 +31,6 @@ router.put('/giver/updateByGiverId/:giverId', updateGiverusingGiverIdCon);
 router.get('/giver/getUsingGiverId/:giverId', getGiverByGiverIdCon);
 router.get('/giver/getUsingUserId/:userId', getGiverByUserIdCon);
 router.get('/giver/getGivers/:giverId', getGiverData);
+router.get('/giver/*', glatRoute);
 
 export default router;

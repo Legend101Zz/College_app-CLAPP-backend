@@ -7,7 +7,7 @@ import { User } from './user.model';
 
 type UserIncludeFields = Array<keyof IUser> | Array<IUser>;
 const read = async (
-  userId: number,
+  userId: String,
   includeFields?: UserIncludeFields,
 ): Promise<Partial<IUser>> => {
   // Fetch user data from the database
