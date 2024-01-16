@@ -16,7 +16,7 @@ interface DynamicTaskFields {
 interface Goal {
   description: string;
   expectedTime: Date;
-  status: 'done' | 'not done' | 'in progress';
+  status: 'done' | 'notDone' | 'inProgress';
 }
 
 interface CustomRequest extends Request {
@@ -29,14 +29,14 @@ const createTaskFromRequestBody = async (
   next: NextFunction,
 ): Promise<void> => {
   try {
+    console.log(req.body);
     // Extract common task fields from req.body
     const commonTaskFields: CreateTaskInput = {
       title: req.body.title,
       description: req.body.description,
       category: req.body.category,
       deadline: new Date(req.body.deadline),
-      // @ts-ignore
-      additionalFields: new Map<string, string>(),
+      additionalFields: {},
       goals: [],
       status: 'draft',
     };
@@ -44,18 +44,13 @@ const createTaskFromRequestBody = async (
     // Extract additional fields specific to that task from req.body
     const { additionalFields, goals, status }: DynamicTaskFields = req.body;
 
-    const keys = Object.keys(additionalFields);
+    // Add additionalFields to the common task fields
+    if (additionalFields && typeof additionalFields === 'object') {
+      commonTaskFields.additionalFields = additionalFields;
+    }
 
-    keys.forEach((key) => {
-      if (Object.prototype.hasOwnProperty.call(additionalFields, key)) {
-        // @ts-ignore
-        // eslint-disable-next-line security/detect-object-injection
-        commonTaskFields.additionalFields[key] = additionalFields[key];
-      }
-    });
     // Add goals to the common task fields
     if (Array.isArray(goals)) {
-      // @ts-ignore
       commonTaskFields.goals = goals as Goal[];
     }
 
@@ -71,7 +66,8 @@ const createTaskFromRequestBody = async (
     next();
   } catch (error) {
     // Handle errors
-    logger.error('Error creating task:', error);
+    logger.error('Error creating task:');
+    logger.error(error);
     res
       .status(httpStatus.INTERNAL_SERVER_ERROR)
       .json({ error: 'Internal Server Error' });

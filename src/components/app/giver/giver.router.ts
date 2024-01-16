@@ -1,6 +1,6 @@
 import { Router } from 'express';
-// import protectedByApiKey from '@core/middlewares/apiKey.middleware';
-// import validation from '@core/middlewares/validate.middleware';
+import protectedByApiKey from '@core/middlewares/apiKey.middleware';
+import validation from '@core/middlewares/validate.middleware';
 import * as TaskFunc from '@components/app/task/task.index';
 import {
   registerGiverController,
@@ -12,6 +12,7 @@ import {
   getGiverByUserIdCon,
   getGiverData,
 } from './giver.controller';
+import { registerGiverValidation } from './giver.validation';
 
 const router: Router = Router();
 
@@ -21,6 +22,7 @@ router.get('/giver', glatRoute);
 // MAIN ROUTES
 router.post(
   '/giver/:id',
+  [protectedByApiKey, validation(registerGiverValidation)],
   TaskFunc.createTaskFromRequestBody,
   registerGiverController,
 );

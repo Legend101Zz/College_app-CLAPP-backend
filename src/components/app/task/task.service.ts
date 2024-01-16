@@ -10,7 +10,7 @@ import TaskModel from './task.model';
 export interface CreateTaskInput extends CommonTaskFields {
   additionalFields: AdditionalFields;
   goals: Goal[];
-  status: 'draft' | 'in progress' | 'done';
+  status: 'draft' | 'inProgress' | 'done';
 }
 
 const createTask = async (taskInput: CreateTaskInput): Promise<ITask> => {

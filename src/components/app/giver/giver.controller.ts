@@ -17,7 +17,7 @@ const registerGiverController = async (req: CustomRequest, res: Response) => {
 
     const taskIds = [req.taskId];
     const optionalProps = {};
-
+    console.log(req.body, taskIds);
     ['Badge', 'ResponseTime', 'Wallet'].forEach((prop) => {
       // eslint-disable-next-line security/detect-object-injection
       if (req.body[prop] !== undefined) {
@@ -31,10 +31,10 @@ const registerGiverController = async (req: CustomRequest, res: Response) => {
       taskIds,
       ...optionalProps,
     });
-    res.status(httpStatus.OK).json(newGiver);
+    return res.status(httpStatus.OK).json(newGiver);
   } catch (error) {
-    // console.error(error); // Log the error for debugging purposes
-    res
+    console.error(error); // Log the error for debugging purposes
+    return res
       .status(httpStatus.INTERNAL_SERVER_ERROR)
       .json({ error: 'Internal Server Error' });
   }
