@@ -43,7 +43,7 @@ const registerGiverController = async (req: CustomRequest, res: Response) => {
 
 const deleteTaskController = async (req: Request, res: Response) => {
   try {
-    const userId = req.params.userId as string;
+    const userId = req.params.giverId as string;
     const taskId = req.params.taskId as string;
 
     if (!userId || !taskId) {

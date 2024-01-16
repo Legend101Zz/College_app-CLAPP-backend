@@ -13,6 +13,7 @@ import {
   getGiverData,
 } from './giver.controller';
 import {
+  deleteTaskValidation,
   getGiverDataValidation,
   registerGiverValidation,
 } from './giver.validation';
@@ -23,6 +24,8 @@ const router: Router = Router();
 router.get('/giver', glatRoute);
 
 // MAIN ROUTES
+
+// Regiter Giver
 router.post(
   '/giver/:id',
   [protectedByApiKey, validation(registerGiverValidation)],
@@ -30,21 +33,41 @@ router.post(
   registerGiverController,
 );
 
+// Delete Tasks from Giver
 router.post(
-  '/giver/:userId/tasks/:taskId',
-  TaskFunc.deleteTask,
+  '/giver/tasks/:taskId/:giverId',
+  [protectedByApiKey, validation(deleteTaskValidation)],
+  TaskFunc.deleteTaskController,
   deleteTaskController,
 );
 
-router.put('/giver/updateByUserId/:userId', updateGiverusingUserIdCon);
-router.put('/giver/updateByGiverId/:giverId', updateGiverusingGiverIdCon);
-router.get('/giver/getUsingGiverId/:giverId', getGiverByGiverIdCon);
-router.get('/giver/getUsingUserId/:userId', getGiverByUserIdCon);
+// Read Giver Details Dynamically
 router.get(
   '/giver/getGivers/:giverId',
   [protectedByApiKey, validation(getGiverDataValidation)],
   getGiverData,
 );
+
+// Read Giver Details as whole
+
+router.get(
+  '/giver/getUsingGiverId/:giverId',
+  [protectedByApiKey],
+  getGiverByGiverIdCon,
+);
+router.get(
+  '/giver/getUsingUserId/:userId',
+  [protectedByApiKey],
+  getGiverByUserIdCon,
+);
+
+router.put(
+  '/giver/updateByUserId/:userId',
+  [protectedByApiKey],
+  updateGiverusingUserIdCon,
+);
+router.put('/giver/updateByGiverId/:giverId', updateGiverusingGiverIdCon);
+
 router.get('/giver/*', glatRoute);
 
 export default router;

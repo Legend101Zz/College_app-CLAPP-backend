@@ -103,11 +103,17 @@ const deleteTaskController = async (
   next: NextFunction,
 ): Promise<void> => {
   try {
-    const taskId: mongoose.Types.ObjectId = new mongoose.Types.ObjectId(
-      req.params.taskId,
-    );
+    const { taskId } = req.params;
+    console.log(taskId);
+    if (!taskId) {
+      res
+        .status(400)
+        .json({ error: 'userId and taskId are required parameters' });
+      return;
+    }
 
     // Call the service to delete the task
+    // @ts-ignore
     await deleteTask(taskId);
 
     next();
@@ -120,4 +126,8 @@ const deleteTaskController = async (
 };
 
 // eslint-disable-next-line import/prefer-default-export
-export { createTaskFromRequestBody, updateTaskController, deleteTask };
+export {
+  createTaskFromRequestBody,
+  updateTaskController,
+  deleteTaskController,
+};

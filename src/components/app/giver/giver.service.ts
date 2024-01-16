@@ -62,7 +62,7 @@ const deleteGiverTask = async (
   taskId: string,
 ): Promise<IGiver> => {
   try {
-    const giver = await GiverModel.findOne({ userId });
+    const giver = await GiverModel.findById(userId);
 
     if (!giver) {
       throw new Error('Giver not found;');
@@ -150,7 +150,7 @@ const read = async (
   includeFields?: GiverIncludeFields,
 ): Promise<Partial<IGiver> | null> => {
   try {
-    let query = GiverModel.findOne({ userId });
+    let query = GiverModel.findById(userId);
 
     if (includeFields && includeFields.length > 0) {
       const fieldProjection: Record<string, 1> = {};

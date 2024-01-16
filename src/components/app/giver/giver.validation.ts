@@ -53,5 +53,22 @@ const getGiverDataValidation = {
   }),
 };
 
+const deleteTaskValidation = {
+  params: Joi.object({
+    giverId: Joi.string()
+      .regex(/^[0-9a-fA-F]{24}$/)
+      .required()
+      .description('Giver ID in hexadecimal format (24 characters)'),
+    taskId: Joi.string()
+      .regex(/^[0-9a-fA-F]{24}$/)
+      .required()
+      .description('Task ID in hexadecimal format (24 characters)'),
+  }),
+};
+
 // eslint-disable-next-line import/prefer-default-export
-export { registerGiverValidation, getGiverDataValidation };
+export {
+  registerGiverValidation,
+  getGiverDataValidation,
+  deleteTaskValidation,
+};
