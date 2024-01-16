@@ -61,12 +61,19 @@ router.get(
   getGiverByUserIdCon,
 );
 
+// UPDATE GIVER DATA
 router.put(
   '/giver/updateByUserId/:userId',
   [protectedByApiKey],
   updateGiverusingUserIdCon,
 );
-router.put('/giver/updateByGiverId/:giverId', updateGiverusingGiverIdCon);
+router.put(
+  '/giver/updateByGiverId/:giverId',
+  [protectedByApiKey],
+  updateGiverusingGiverIdCon,
+);
+
+// FOR HANDLING TYPO GIVER ROUTES
 
 router.get('/giver/*', glatRoute);
 
