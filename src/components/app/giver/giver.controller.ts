@@ -14,32 +14,23 @@ interface CustomRequest extends Request {
 const registerGiverController = async (req: CustomRequest, res: Response) => {
   try {
     const userId = req.params.id;
-    const {
-      Badge: { category: badgeCategory },
-      ResponseTime,
-      Wallet,
-    } = req.body;
 
     const taskIds = [req.taskId];
+    const optionalProps = {};
 
-    if (!userId || !badgeCategory || !ResponseTime || !Wallet || !taskIds) {
-      res.status(httpStatus.BAD_REQUEST).json({
-        error:
-          'userId, badgeCategory, ResponseTime, Wallet, and Tasks are required parameters',
-      });
-      return;
-    }
-
-    // const taskIds = Tasks.map((task: any) => task.taskId);
+    ['Badge', 'ResponseTime', 'Wallet'].forEach((prop) => {
+      // eslint-disable-next-line security/detect-object-injection
+      if (req.body[prop] !== undefined) {
+        // eslint-disable-next-line security/detect-object-injection
+        optionalProps[prop] = req.body[prop];
+      }
+    });
 
     const newGiver = await giverService.registerGiver({
       userId,
-      badgeCategory,
-      responseTime: ResponseTime,
-      walletId: Wallet,
       taskIds,
+      ...optionalProps,
     });
-
     res.status(httpStatus.OK).json(newGiver);
   } catch (error) {
     // console.error(error); // Log the error for debugging purposes

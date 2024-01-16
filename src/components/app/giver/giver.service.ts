@@ -8,9 +8,9 @@ import { update } from '../user/user.service';
 
 interface IRegisterGiverParams {
   userId: string;
-  badgeCategory: string;
-  responseTime: number;
-  walletId: string;
+  badgeCategory?: string;
+  responseTime?: number;
+  walletId?: string;
   taskIds: string[];
 }
 
@@ -38,9 +38,7 @@ const registerGiver = async ({
 
     // Create a new giver
     const newGiver: IGiver = new GiverModel({
-      Badge: {
-        category: badgeCategory,
-      },
+      Badge: badgeCategory ? { category: badgeCategory } : undefined,
       ResponseTime: responseTime,
       Wallet: walletId,
       Tasks: taskIds.map((taskId) => ({ taskId })),
