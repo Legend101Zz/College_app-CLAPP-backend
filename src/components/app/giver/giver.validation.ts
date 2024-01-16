@@ -37,5 +37,21 @@ const registerGiverValidation: ValidationSchema = {
   }),
 };
 
+const getGiverDataValidation = {
+  params: Joi.object({
+    giverId: Joi.string()
+      .regex(/^[0-9a-fA-F]{24}$/)
+      .required()
+      .description('Giver ID in hexadecimal format (24 characters)'),
+  }),
+  query: Joi.object({
+    fields: Joi.string()
+      .optional()
+      .description(
+        'Comma-separated list of dynamic fields to include in the response',
+      ),
+  }),
+};
+
 // eslint-disable-next-line import/prefer-default-export
-export { registerGiverValidation };
+export { registerGiverValidation, getGiverDataValidation };

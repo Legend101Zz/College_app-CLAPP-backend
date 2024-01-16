@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import httpStatus from 'http-status';
+import logger from '@core/utils/logger';
 import giverService from '@components/app/giver/giver.service';
 import { IGiver } from './giver.interface';
 // import logger from '@core/utils/logger';
@@ -33,7 +34,7 @@ const registerGiverController = async (req: CustomRequest, res: Response) => {
     });
     return res.status(httpStatus.OK).json(newGiver);
   } catch (error) {
-    console.error(error); // Log the error for debugging purposes
+    logger.error(error); // Log the error for debugging purposes
     return res
       .status(httpStatus.INTERNAL_SERVER_ERROR)
       .json({ error: 'Internal Server Error' });

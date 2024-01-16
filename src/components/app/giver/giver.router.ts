@@ -12,7 +12,10 @@ import {
   getGiverByUserIdCon,
   getGiverData,
 } from './giver.controller';
-import { registerGiverValidation } from './giver.validation';
+import {
+  getGiverDataValidation,
+  registerGiverValidation,
+} from './giver.validation';
 
 const router: Router = Router();
 
@@ -37,7 +40,11 @@ router.put('/giver/updateByUserId/:userId', updateGiverusingUserIdCon);
 router.put('/giver/updateByGiverId/:giverId', updateGiverusingGiverIdCon);
 router.get('/giver/getUsingGiverId/:giverId', getGiverByGiverIdCon);
 router.get('/giver/getUsingUserId/:userId', getGiverByUserIdCon);
-router.get('/giver/getGivers/:giverId', getGiverData);
+router.get(
+  '/giver/getGivers/:giverId',
+  [protectedByApiKey, validation(getGiverDataValidation)],
+  getGiverData,
+);
 router.get('/giver/*', glatRoute);
 
 export default router;
