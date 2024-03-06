@@ -1,5 +1,6 @@
 import express, { Application } from 'express';
 import api from 'api';
+import path from 'path';
 import httpContext from 'express-http-context';
 import consts from '@config/consts';
 import httpLogger from '@core/utils/httpLogger';
@@ -20,6 +21,7 @@ app.use(httpLogger.errorHandler);
 app.use(uniqueReqId);
 app.use(express.json());
 app.use(cors());
+app.use(express.static(path.join(__dirname, '../public')));
 app.use(consts.API_ROOT_PATH, api);
 app.use(swaggerApiDocs);
 app.use(http404);

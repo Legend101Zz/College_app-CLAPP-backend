@@ -1,4 +1,5 @@
 import { Server } from 'http';
+import socketIO from 'socket.io';
 import app from '@app';
 import config from '@config/config';
 import logger from '@core/utils/logger';
@@ -10,6 +11,9 @@ const server: Server = app.listen(port, (): void => {
   logger.info(`Application listens on PORT: ${port}`);
 });
 
+// initialising socket server
+const IO = new socketIO.Server(server);
+console.log('io', IO);
 const exitHandler = (): void => {
   if (app) {
     server.close(() => {
@@ -39,3 +43,5 @@ process.on('SIGTERM', () => {
     server.close();
   }
 });
+
+export default IO;

@@ -52,6 +52,7 @@
     "node-mocks-http": "^1.11.0",
     "path": "^0.12.7",
     "runtime-node-refresh": "^1.0.6",
+    "socket.io": "^4.7.4",
     "supertest": "^6.1.6",
     "swagger-ui-express": "^4.3.0",
     "ts-jest": "^27.1.1",
