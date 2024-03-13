@@ -13,7 +13,11 @@ const server: Server = app.listen(port, (): void => {
 });
 
 // initialising socket server
-const IO = new socketIO.Server(server);
+const IO = new socketIO.Server(server, {
+  cors: {
+    origin: config.client_URL,
+  },
+});
 configureSocketIO(IO);
 app.set('io', IO);
 
