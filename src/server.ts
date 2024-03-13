@@ -13,7 +13,7 @@ const server: Server = app.listen(port, (): void => {
 
 // initialising socket server
 const IO = new socketIO.Server(server);
-console.log('io', IO);
+
 const exitHandler = (): void => {
   if (app) {
     server.close(() => {

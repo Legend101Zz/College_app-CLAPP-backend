@@ -8,6 +8,8 @@ import errorHandling from '@core/middlewares/errorHandling.middleware';
 import uniqueReqId from '@core/middlewares/uniqueReqId.middleware';
 import http404 from '@components/404/404.router';
 import swaggerApiDocs from '@components/swagger-ui/swagger.router';
+import IO from 'server';
+import configureSocketIO from 'socketIOConfig';
 import cors from 'cors';
 import db from './db';
 
@@ -22,6 +24,8 @@ app.use(uniqueReqId);
 app.use(express.json());
 app.use(cors());
 app.use(express.static(path.join(__dirname, '../public')));
+configureSocketIO(IO);
+app.set('io', IO);
 app.use(consts.API_ROOT_PATH, api);
 app.use(swaggerApiDocs);
 app.use(http404);
