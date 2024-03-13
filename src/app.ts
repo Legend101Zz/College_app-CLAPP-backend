@@ -14,7 +14,7 @@ import cors from 'cors';
 import db from './db';
 
 db.connect();
-
+console.log('checking IO', IO);
 const app: Application = express();
 
 app.use(httpContext.middleware);

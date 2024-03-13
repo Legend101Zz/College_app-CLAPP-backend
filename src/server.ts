@@ -14,6 +14,8 @@ const server: Server = app.listen(port, (): void => {
 // initialising socket server
 const IO = new socketIO.Server(server);
 
+console.log('checking IO2', IO);
+
 const exitHandler = (): void => {
   if (app) {
     server.close(() => {

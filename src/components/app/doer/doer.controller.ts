@@ -3,7 +3,6 @@ import { Request, Response } from 'express';
 import httpStatus from 'http-status';
 import doerService from './doer.service';
 import { IDoer } from './doer.interface';
-import io
 // import mongoose from 'mongoose';
 
 const registerDoerController = async (req: Request, res: Response) => {
