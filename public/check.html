@@ -3,6 +3,10 @@
 
   <script src="/socket.io/socket.io.js"></script>
   <script>
-    console.log('testing', io);
+    const socket = io();
+
+    socket.on('connect', (data) => {
+      console.log(data);
+    });
   </script>
 </body>

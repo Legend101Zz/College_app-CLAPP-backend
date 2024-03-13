@@ -4,6 +4,7 @@ import app from '@app';
 import config from '@config/config';
 import logger from '@core/utils/logger';
 import errorHandler from 'core/utils/errorHandler';
+import configureSocketIO from 'socketIOConfig';
 
 const { port } = config;
 
@@ -13,8 +14,10 @@ const server: Server = app.listen(port, (): void => {
 
 // initialising socket server
 const IO = new socketIO.Server(server);
+configureSocketIO(IO);
+app.set('io', IO);
 
-console.log('checking IO2', IO);
+// console.log('checking IO2', IO);
 
 const exitHandler = (): void => {
   if (app) {
