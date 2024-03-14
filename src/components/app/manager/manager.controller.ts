@@ -4,6 +4,7 @@ import httpStatus from 'http-status';
 
 const handleCommunityCreation = (req: Request, res: Response) => {
   const { communityName } = req.body;
+  console.log(req.body);
   const io = req.app.get('io');
   // Create the namespace dynamically
   const namespace = io.of(`/${communityName}`);
