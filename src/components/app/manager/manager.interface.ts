@@ -1,4 +1,4 @@
-import mongoose, { Document } from 'mongoose';
+import mongoose from 'mongoose';
 
 export interface ITasks {
   taskId: mongoose.Schema.Types.ObjectId;
