@@ -12,7 +12,7 @@ const createNamespace = (
     const namespace = io.of(`/${namespaceName}`);
 
     // Handle connection event in the namespace
-    namespace.on(StandardIOEventCalls, () => {
+    namespace.on(StandardIOEventCalls.connection, () => {
       namespace.emit('connected', 'hello'); // Emit event to all clients in the namespace
       logger.info({
         message: 'New connection to namespace',
