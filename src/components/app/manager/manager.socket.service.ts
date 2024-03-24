@@ -42,5 +42,26 @@ const createRoom = (namespace: Namespace, roomName: string) => {
   }
 };
 
+// Function to send a direct message to a specific socket within a namespace
+const sendDirectMessage = (
+  namespace: Namespace,
+  receiverSocketId: string,
+  event: string,
+  data: any,
+): void => {
+  // Find the socket with the given ID within the namespace
+  const receiverSocket: Socket | undefined =
+    namespace.sockets.get(receiverSocketId);
+
+  if (receiverSocket) {
+    // Emit the event to the receiver socket
+    receiverSocket.emit(event, data);
+  } else {
+    logger.error(
+      `Receiver socket ${receiverSocketId} not found in the namespace.`,
+    );
+  }
+};
+
 // eslint-disable-next-line import/prefer-default-export
-export { createNamespace, createRoom };
+export { createNamespace, createRoom, sendDirectMessage };

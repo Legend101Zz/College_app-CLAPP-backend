@@ -25,5 +25,8 @@ const handleCommunityCreation = async (req: Request, res: Response) => {
   res.status(200).json({ communityName });
 };
 
+
+const handleRoomCreation = (req: Request, res: Response)
+
 // eslint-disable-next-line import/prefer-default-export
 export { handleCommunityCreation };
