@@ -11,5 +11,5 @@ const CommunitySchema: Schema<ICommunity> = new Schema({
   createdAt: { type: Date, default: Date.now },
 });
 
-const communityModel = mongoose.model<ICommunity>('Community', CommunitySchema);
-export default communityModel;
+const CommunityModel = mongoose.model<ICommunity>('Community', CommunitySchema);
+export default CommunityModel;

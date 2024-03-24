@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import communityModel from './community.model';
+import CommunityModel from './community.model';
 import { ICommunity } from './community.interface';
 
 interface IRegisterCommunityParams {
@@ -20,7 +20,7 @@ const createCommunityService = async ({
   rooms,
 }: IRegisterCommunityParams): Promise<ICommunity> => {
   try {
-    const community = await communityModel.create({
+    const community = await CommunityModel.create({
       name,
       doer: doer.map((id) => new mongoose.Types.ObjectId(id)), // Convert each string id to ObjectId
       giver: new mongoose.Types.ObjectId(giver), // Convert giver to ObjectId
