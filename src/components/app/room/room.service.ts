@@ -1,3 +1,4 @@
+import mongoose from 'mongoose';
 import RoomModel from './room.model';
 import { ICommunity } from '../community/community.interface';
 import CommunityModel from '../community/community.model';
@@ -15,8 +16,8 @@ const createDefaultRoomService = async ({
     // Create the default room
     const defaultRoom: IRoom = await RoomModel.create({
       name: 'home',
-      community: communityId,
-      participants: [{ userId: managerId }],
+      community: new mongoose.Types.ObjectId(communityId),
+      participants: [{ userId: new mongoose.Types.ObjectId(managerId) }],
     });
 
     const community: ICommunity | null = await CommunityModel.findById(
