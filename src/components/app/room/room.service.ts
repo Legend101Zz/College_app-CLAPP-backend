@@ -17,7 +17,6 @@ const createDefaultRoomService = async ({
       name: 'home',
       community: communityId,
       participants: [{ userId: managerId }],
-      chats: [],
     });
 
     const community: ICommunity | null = await CommunityModel.findById(
@@ -29,7 +28,7 @@ const createDefaultRoomService = async ({
     }
 
     // Add the default room to the community's rooms array
-    community.rooms.push(defaultRoom._id);
+    community.rooms.push({ roomId: defaultRoom._id });
 
     // Save the updated community document
     await community.save();
