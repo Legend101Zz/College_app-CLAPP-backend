@@ -1,19 +1,50 @@
 import RoomModel from './room.model';
-import communityModel from '../community/community.model';
+import { ICommunity } from '../community/community.interface';
+import CommunityModel from '../community/community.model';
+import {
+  IRoom,
+  ICreateDefaultRoomParams,
+  ICreateRoomInCommunityServiceParams,
+} from './room.interface';
 
-interface ICreateRoomInCommunityServiceParams {
-  body: {
-    name: string;
-    participants: [{ userId: string }];
-    chats?: [{ id: string; timestamp: number; userId: string; body: string }];
-  };
-  communityId: string;
-}
+const createDefaultRoomService = async ({
+  communityId,
+  managerId,
+}: ICreateDefaultRoomParams): Promise<ICommunity> => {
+  try {
+    // Create the default room
+    const defaultRoom: IRoom = await RoomModel.create({
+      name: 'home',
+      community: communityId,
+      participants: [{ userId: managerId }],
+      chats: [],
+    });
+
+    const community: ICommunity | null = await CommunityModel.findById(
+      communityId,
+    );
+
+    if (!community) {
+      throw new Error(`Community with ID ${communityId} not found`);
+    }
+
+    // Add the default room to the community's rooms array
+    community.rooms.push(defaultRoom._id);
+
+    // Save the updated community document
+    await community.save();
+
+    return community;
+  } catch (error) {
+    throw new Error(`Error creating default room: ${error.message}`);
+  }
+};
+
 const createRoomInCommunityService = async ({
   body,
   communityId,
 }: ICreateRoomInCommunityServiceParams): Promise<any> => {
-  const community = await communityModel.findById(communityId);
+  const community = await CommunityModel.findById(communityId);
   if (!community) {
     throw new Error('Community not found');
   }
@@ -29,4 +60,4 @@ const createRoomInCommunityService = async ({
   return room;
 };
 
-export { createRoomInCommunityService };
+export { createDefaultRoomService, createRoomInCommunityService };

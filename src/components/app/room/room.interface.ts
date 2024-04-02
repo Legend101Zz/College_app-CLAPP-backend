@@ -18,3 +18,16 @@ export interface IRoom {
   participants: IParticipants[];
   chats: IChat[];
 }
+
+export interface ICreateDefaultRoomParams {
+  communityId: string;
+  managerId: string;
+}
+export interface ICreateRoomInCommunityServiceParams {
+  body: {
+    name: string;
+    participants: [{ userId: string }];
+    chats?: [{ id: string; timestamp: number; userId: string; body: string }];
+  };
+  communityId: string;
+}
