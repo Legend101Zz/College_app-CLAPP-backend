@@ -17,7 +17,4 @@ router.post(
   handleCommunityCreation,
 );
 
-
-
-
 export default router;

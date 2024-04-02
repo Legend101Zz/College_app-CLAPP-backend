@@ -4,16 +4,15 @@ import { ICommunity } from './community.interface';
 
 interface IRegisterCommunityParams {
   name: string;
-  doer: string[];
+  doer?: string[];
   giver: string;
   manager: string;
   task: string;
-  rooms: string[];
+  rooms?: string[];
 }
 
 const createCommunityService = async ({
   name,
-  doer,
   giver,
   manager,
   task,
@@ -22,7 +21,6 @@ const createCommunityService = async ({
   try {
     const community = await CommunityModel.create({
       name,
-      doer: doer.map((id) => new mongoose.Types.ObjectId(id)), // Convert each string id to ObjectId
       giver: new mongoose.Types.ObjectId(giver), // Convert giver to ObjectId
       manager: new mongoose.Types.ObjectId(manager), // Convert manager to ObjectId
       task: new mongoose.Types.ObjectId(task), // Convert task to ObjectId
