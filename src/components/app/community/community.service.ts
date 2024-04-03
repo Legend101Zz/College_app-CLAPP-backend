@@ -12,6 +12,14 @@ interface IRegisterCommunityParams {
   rooms?: string[];
 }
 
+type CommunityName = `${string}_${string}`;
+
+const isValidCommunityName = (name: string): name is CommunityName => {
+  // 'exampleCommunityName_123456789012345678901234';  Valid community name
+  const pattern = /^[a-zA-Z0-9]+_[a-f\d]{24}$/;
+  return pattern.test(name);
+};
+
 const createCommunityService = async ({
   name,
   giver,
@@ -38,4 +46,4 @@ const createCommunityService = async ({
   }
 };
 
-export default createCommunityService;
+export { createCommunityService, isValidCommunityName };

@@ -1,11 +1,11 @@
-import { Server, Socket } from 'socket.io';
-import { RoomModel } from './models/Room'; // Import your Room model
+import logger from '@core/utils/logger';
+import { Socket } from 'socket.io';
+import RoomModel from './room.model';
 
 const authorizeRoomJoin = async (socket: Socket, next: () => void) => {
   try {
-    const roomName = socket.handshake.query.room; // Get the room name from the query parameters
+    const roomName = socket.handshake.query.room;
 
-    // Check if the room exists in the database
     const room = await RoomModel.findOne({ name: roomName });
 
     if (!room) {
@@ -13,9 +13,9 @@ const authorizeRoomJoin = async (socket: Socket, next: () => void) => {
     }
 
     // Check if the participant is allowed to join the room
-    const participantId = socket.handshake.query.userId; // Assuming userId is passed in query parameters
+    const participantId = socket.handshake.query.userId;
     const isParticipantAllowed = room.participants.some(
-      (participant) => participant.userId === participantId,
+      (participant) => String(participant.userId) === participantId,
     );
 
     if (!isParticipantAllowed) {
@@ -27,7 +27,7 @@ const authorizeRoomJoin = async (socket: Socket, next: () => void) => {
     // If participant is allowed, call next to proceed with socket connection
     next();
   } catch (error) {
-    console.error('Authorization error:', error);
+    logger.error('Authorization error:', error);
     socket.disconnect(true); // Disconnect the socket if authorization fails
   }
 };

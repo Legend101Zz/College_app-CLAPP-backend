@@ -53,7 +53,6 @@ const createRoomInCommunityService = async ({
   const room = new RoomModel({
     name: nameWithUnderscores,
     participants: body.participants,
-    chats: body.chats,
     community: communityId,
   });
   await room.save();

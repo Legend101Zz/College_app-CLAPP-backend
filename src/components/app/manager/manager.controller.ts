@@ -3,7 +3,10 @@ import mongoose from 'mongoose';
 import { Server } from 'socket.io';
 import logger from '@core/utils/logger';
 import { createNamespace } from './manager.socket.service';
-import createCommunityService from '../community/community.service';
+import {
+  createCommunityService,
+  isValidCommunityName,
+} from '../community/community.service';
 
 const handleCommunityCreation = async (req: Request, res: Response) => {
   const { name, giver, manager, task } = req.body;
