@@ -20,10 +20,13 @@ const handleCommunityCreation = async (req: Request, res: Response) => {
   });
   const communityName = `${name}_${community._id}`;
   const io: Server = req.app.get('io');
-
-  createNamespace(io, communityName);
-  // Respond to the client
-  res.status(200).json({ communityName });
+  if (isValidCommunityName(communityName)) {
+    createNamespace(io, communityName);
+    // Respond to the client
+    res.status(200).json({ communityName });
+  } else {
+    res.status(400).send('Invalid Community Name');
+  }
 };
 
 const handleRoomCreation = async (req: Request, res: Response) => {};
