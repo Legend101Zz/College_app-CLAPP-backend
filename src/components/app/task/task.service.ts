@@ -13,6 +13,10 @@ export interface CreateTaskInput extends CommonTaskFields {
   status: 'draft' | 'inProgress' | 'done';
 }
 
+export interface GoalInter {
+  goal: Goal[];
+}
+
 const createTask = async (taskInput: CreateTaskInput): Promise<ITask> => {
   try {
     const newTask: ITask = new TaskModel({
@@ -84,4 +88,28 @@ const deleteTask = async (taskId: mongoose.Types.ObjectId): Promise<void> => {
   }
 };
 
-export { createTask, updateTask, deleteTask };
+const addNewGoalService = async (
+  taskId: mongoose.Types.ObjectId,
+  goal: GoalInter,
+) => {
+  try {
+    if (!taskId || !goal) {
+      throw new Error('Task ID and goal data are required.');
+    }
+
+    const task = await TaskModel.findById(taskId);
+    if (!task) {
+      throw new Error('Task not found');
+    }
+    // const newGoal = goal.goal;
+    task.goals.push(...goal.goal);
+
+    const updatedTask = await task.save();
+
+    return updatedTask;
+  } catch (error) {
+    throw new Error(`Error adding new goal: ${error.message}`);
+  }
+};
+
+export { createTask, updateTask, deleteTask, addNewGoalService };

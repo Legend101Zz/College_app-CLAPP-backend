@@ -7,6 +7,7 @@ import {
   CreateTaskInput,
   updateTask,
   deleteTask,
+  addNewGoalService,
 } from './task.service';
 
 interface DynamicTaskFields {
@@ -125,9 +126,33 @@ const deleteTaskController = async (
   }
 };
 
+const addNewGoalController = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+): Promise<void> => {
+  try {
+    const taskId: mongoose.Types.ObjectId = new mongoose.Types.ObjectId(
+      req.params.id,
+    );
+    const goal = req.body;
+
+    const updatedTask = await addNewGoalService(taskId, goal);
+
+    res.status(200).json(updatedTask);
+    next();
+  } catch (error) {
+    logger.error('Error adding new goal to task:', error);
+    res
+      .status(httpStatus.INTERNAL_SERVER_ERROR)
+      .json({ error: 'Internal Server Error' });
+  }
+};
+
 // eslint-disable-next-line import/prefer-default-export
 export {
   createTaskFromRequestBody,
   updateTaskController,
   deleteTaskController,
+  addNewGoalController,
 };

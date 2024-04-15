@@ -11,6 +11,7 @@ const taskSchema = new Schema<ITask>({
   },
   goals: [
     {
+      id: { type: Number, required: true },
       description: { type: String, required: true },
       expectedTime: { type: Date, required: true },
       status: {
