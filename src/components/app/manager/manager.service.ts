@@ -23,7 +23,8 @@ const validManagerService = async (taskId: string, managerId: string) => {
     }
     return true;
   } catch (error) {
-    throw new Error(⁠`validating manager: ${error.message}` ⁠);
+    // throw new Error(⁠`validating manager: ${error.message}` ⁠);
+    throw new Error(`validating manager: ${error.message}`);
   }
 };
 
