@@ -1,8 +1,9 @@
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import mongoose from 'mongoose';
 import { Server } from 'socket.io';
 import logger from '@core/utils/logger';
 import { createNamespace } from './manager.socket.service';
+import validManagerService from './manager.service';
 import {
   createCommunityService,
   isValidCommunityName,
@@ -31,5 +32,25 @@ const handleCommunityCreation = async (req: Request, res: Response) => {
 
 const handleRoomCreation = async (req: Request, res: Response) => {};
 
+const validManagerController = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const { taskId, managerId } = req.params;
+    if (!taskId || !managerId) {
+      res.status(400).json({ error: 'taskId and managerId are required' });
+      return;
+    }
+    // Call the service to validate the manager
+    // @ts-ignore
+    await validManagerService(taskId, managerId);
+    next();
+  } catch (error) {
+    logger.error('Error validating manager:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
 // eslint-disable-next-line import/prefer-default-export
-export { handleCommunityCreation };
+export { handleCommunityCreation, validManagerController };
