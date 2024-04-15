@@ -1,5 +1,4 @@
 import mongoose from 'mongoose';
-import { json } from 'stream/consumers';
 
 export interface ITasks {
   taskId: mongoose.Schema.Types.ObjectId;
@@ -58,17 +57,4 @@ export interface IDoer extends mongoose.Document {
   Tasks: ITasks[];
   Reviews: IReviews[];
   Specialtags: string[];
-}
-
-
-{
-
-  taskid:
-  goals : {
-   1: basic html , status : 
-   2: add css 
-   3: add js 
-   4 : merge 
-
-  }
 }

@@ -20,7 +20,6 @@ import {
 
 const router: Router = Router();
 
-<<<<<<< Updated upstream
 // ROUTE TO HANDLE WRONG GIVER ROUTES
 router.get('/giver', glatRoute);
 
@@ -76,7 +75,6 @@ router.put(
 
 // FOR HANDLING TYPO GIVER ROUTES
 
-=======
 router.post('/giver/:id', registerGiverController);
 
 router.post('/giver/:userId/tasks/:taskId', deleteTaskController);
@@ -84,7 +82,6 @@ router.put('/giver/updateByUserId/:userId', updateGiverusingUserIdCon);
 router.put('/giver/updateByGiverId/:giverId', updateGiverusingGiverIdCon);
 router.get('/giver/getUsingGiverId/:giverId', getGiverByGiverIdCon);
 router.get('/giver/getUsingUserId/:userId', getGiverByUserIdCon);
->>>>>>> Stashed changes
 router.get('/giver/*', glatRoute);
 
 export default router;
