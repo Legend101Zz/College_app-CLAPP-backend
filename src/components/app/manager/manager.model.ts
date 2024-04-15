@@ -33,6 +33,6 @@ const ManagerSchema: Schema<IManager> = new Schema({
   ],
   Specialtags: [{ type: String }],
 });
-const Manager = mongoose.model<IManager>('Doer', ManagerSchema);
+const Manager = mongoose.model<IManager>('Manager', ManagerSchema);
 
 export default Manager;
