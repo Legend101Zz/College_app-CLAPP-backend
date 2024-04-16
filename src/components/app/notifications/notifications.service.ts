@@ -1,4 +1,3 @@
-import mongoose from 'mongoose';
 import logger from '@core/utils/logger';
 import { INotifications } from './notications.interface';
 import NotificationsModel from './notifications.model';

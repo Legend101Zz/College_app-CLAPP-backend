@@ -5,6 +5,7 @@ const StandardIOEventCalls = {
   messageReceived: 'messageReceived',
   roomCreated: 'roomCreated',
   createRoom: 'createRoom',
+  notification: 'sendNotification',
 } as const;
 
 export default StandardIOEventCalls;
