@@ -8,6 +8,7 @@ import {
   updateTask,
   deleteTask,
   addNewGoalService,
+  updateTaskStatusService,
 } from './task.service';
 
 interface DynamicTaskFields {
@@ -146,6 +147,35 @@ const addNewGoalController = async (
     res
       .status(httpStatus.INTERNAL_SERVER_ERROR)
       .json({ error: 'Internal Server Error' });
+  }
+};
+
+const updateTaskStatusController = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const { taskId } = req.params;
+    const { status } = req.body;
+
+    if (!taskId) {
+      return res.status(400).json({ error: 'Task ID is required.' });
+    }
+
+    // Convert taskId to MongoDB ObjectId
+    const taskIdObj = new mongoose.Types.ObjectId(taskId);
+
+    await updateTaskStatusService(taskIdObj, status);
+
+    // return res.status(200).json({
+    //   message: 'Task status updated successfully.',
+    //   task: updatedTask,
+    // });
+    next();
+  } catch (error) {
+    console.error('Error updating task status:', error);
+    return res.status(500).json({ error: 'Internal Server Error' });
   }
 };
 

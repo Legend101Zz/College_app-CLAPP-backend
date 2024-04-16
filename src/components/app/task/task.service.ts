@@ -112,14 +112,36 @@ const addNewGoalService = async (
   }
 };
 
-const updateTaskStatusService = async ( taskId: mongoose.Types.ObjectId, status: any ) => {
+const updateTaskStatusService = async (
+  taskId: mongoose.Types.ObjectId,
+  status: any,
+) => {
   try {
     if (!taskId) {
       throw new Error('Task ID is required.');
     }
 
-    const task = await TaskModel.findByIdAndUpdate()
+    // Assuming status is an object containing the updated status field
+    const updatedTask = await TaskModel.findByIdAndUpdate(
+      taskId,
+      { status },
+      { new: true },
+    );
 
+    if (!updatedTask) {
+      throw new Error('Task not found.');
+    }
+
+    return updatedTask;
+  } catch (error) {
+    throw new Error(`Error updating task status: ${error.message}`);
+  }
 };
 
-export { createTask, updateTask, deleteTask, addNewGoalService };
+export {
+  createTask,
+  updateTask,
+  deleteTask,
+  addNewGoalService,
+  updateTaskStatusService,
+};
