@@ -30,7 +30,7 @@ const handleCommunityCreation = async (req: Request, res: Response) => {
   }
 };
 
-const handleRoomCreation = async (req: Request, res: Response) => {};
+// const handleRoomCreation = async (req: Request, res: Response) => {};
 
 const validManagerController = async (
   req: Request,
@@ -49,7 +49,7 @@ const validManagerController = async (
     next();
   } catch (error) {
     logger.error('Error validating manager:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    res.status(500).json({ error: error.message });
   }
 };
 // eslint-disable-next-line import/prefer-default-export

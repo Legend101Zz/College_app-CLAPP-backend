@@ -112,4 +112,14 @@ const addNewGoalService = async (
   }
 };
 
+const updateTaskStatusService = async ( taskId: mongoose.Types.ObjectId, status: any ) => {
+  try {
+    if (!taskId) {
+      throw new Error('Task ID is required.');
+    }
+
+    const task = await TaskModel.findByIdAndUpdate()
+
+};
+
 export { createTask, updateTask, deleteTask, addNewGoalService };

@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import protectedByApiKey from '@core/middlewares/apiKey.middleware';
-import validation from '@core/middlewares/validate.middleware';
+// import validation from '@core/middlewares/validate.middleware';
 import {
   handleCommunityCreation,
   validManagerController,
@@ -19,6 +19,7 @@ router.post(
   [protectedByApiKey],
   handleCommunityCreation,
 );
-router.get('/validManager', validManagerController);
+// router.get('/manager/valid/ ', validManagerController);
+// router.get('/validate-manager/:managerId/task/:taskId', validManagerController); //working
 
 export default router;
