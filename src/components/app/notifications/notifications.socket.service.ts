@@ -5,22 +5,22 @@ import addNotification from './notifications.service';
 import { INotifications } from './notications.interface';
 
 // Function to handle notifications
-const sendNotification = (io: Server) => {
+const sendNotification = async (
+  io: Server,
+  notificationInput: INotifications,
+): Promise<void> => {
   try {
-    io.on(
-      StandardIOEventCalls.notification,
-      async (notificationInput: INotifications) => {
-        try {
-          // Add the notification to the database
-          await addNotification(notificationInput);
+    try {
+      logger.debug('notificationInput', notificationInput);
+      // Add the notification to the database
+      await addNotification(notificationInput);
 
-          // Emit the notification data to all connected clients
-          io.emit('notification', notificationInput);
-        } catch (error) {
-          logger.error('Error adding notification:', error.message);
-        }
-      },
-    );
+      // Emit the notification data to all connected clients
+      io.emit(StandardIOEventCalls.notification, notificationInput);
+      logger.info('Notification io done');
+    } catch (error) {
+      logger.error('Error adding notification:', error.message);
+    }
   } catch (error) {
     throw new Error(`Error in IO server: ${error.message}`);
   }

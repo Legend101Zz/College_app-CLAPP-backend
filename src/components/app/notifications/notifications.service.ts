@@ -6,9 +6,10 @@ const addNotification = async (
   notificationInput: INotifications,
 ): Promise<void> => {
   try {
+    logger.debug(notificationInput);
     // Create a new notification document based on the input
     const notification = new NotificationsModel(notificationInput);
-
+    logger.debug(notification);
     // Save the notification to the database
     await notification.save();
 
