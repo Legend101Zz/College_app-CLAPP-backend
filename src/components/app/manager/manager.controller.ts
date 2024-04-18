@@ -1,9 +1,6 @@
-import { NextFunction, Request, Response } from 'express';
-import mongoose from 'mongoose';
+import { Request, Response } from 'express';
 import { Server } from 'socket.io';
-import logger from '@core/utils/logger';
 import { createNamespace } from './manager.socket.service';
-import validManagerService from './manager.service';
 import {
   createCommunityService,
   isValidCommunityName,

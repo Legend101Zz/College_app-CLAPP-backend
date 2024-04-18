@@ -1,6 +1,5 @@
-// import TaskModel from '../task/task.model';
 import Manager from './manager.model';
-// src/components/app/task/task.model.ts
+
 const validManagerService = async (taskId: string, managerId: string) => {
   try {
     if (!managerId) {

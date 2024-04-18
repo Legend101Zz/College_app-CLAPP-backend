@@ -9,6 +9,7 @@ import {
   deleteTask,
   addNewGoalService,
   updateTaskStatusService,
+  updateTaskGoalStatusService,
 } from './task.service';
 
 interface DynamicTaskFields {
@@ -167,22 +168,51 @@ const updateTaskStatusController = async (
     const taskIdObj = new mongoose.Types.ObjectId(taskId);
 
     await updateTaskStatusService(taskIdObj, status);
-
-    // return res.status(200).json({
-    //   message: 'Task status updated successfully.',
-    //   task: updatedTask,
-    // });
     next();
+    return res.status(200).json({
+      message: 'Task status updated successfully.',
+      // task: updatedTask,
+    });
   } catch (error) {
     console.error('Error updating task status:', error);
     return res.status(500).json({ error: 'Internal Server Error' });
   }
 };
 
-// eslint-disable-next-line import/prefer-default-export
+const updateTaskGoalStatus = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+): Promise<any> => {
+  try {
+    const { taskId, goalId, status } = req.body;
+
+    if (!taskId || !goalId || !status) {
+      return res.status(400).json({
+        error: 'Task ID, goal ID, and status are required.',
+      });
+    }
+
+    // Convert task and goal IDs to MongoDB ObjectId
+    const taskIdObj = new mongoose.Types.ObjectId(taskId);
+    const goalIdObj = new mongoose.Types.ObjectId(goalId);
+
+    await updateTaskGoalStatusService(taskIdObj, goalIdObj, status);
+    next();
+    return res.status(200).json({
+      message: 'Task goal status updated successfully.',
+    });
+  } catch (error) {
+    logger.error('Error updating task goal status:', error);
+    return res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+
 export {
   createTaskFromRequestBody,
   updateTaskController,
   deleteTaskController,
   addNewGoalController,
+  updateTaskStatusController,
+  updateTaskGoalStatus,
 };

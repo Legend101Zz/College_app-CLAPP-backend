@@ -138,10 +138,42 @@ const updateTaskStatusService = async (
   }
 };
 
+const updateTaskGoalStatusService = async (
+  taskId: mongoose.Types.ObjectId,
+  goalId: mongoose.Types.ObjectId,
+  status: any,
+) => {
+  try {
+    if (!taskId || !goalId || !status) {
+      throw new Error('Task ID, goal ID, and status are required.');
+    }
+
+    const task = await TaskModel.findById(taskId);
+    if (!task) {
+      throw new Error('Task not found.');
+    }
+
+    const goalToUpdateIndex = task.goals.findIndex((goal) =>
+      goal._id.equals(goalId),
+    );
+    if (goalToUpdateIndex === -1) {
+      throw new Error('Goal not found within the task.');
+    }
+
+    task.goals[goalToUpdateIndex].status = status;
+
+    const updatedTask = await task.save();
+    return updatedTask;
+  } catch (error) {
+    throw new Error(`Error updating task goal status: ${error.message}`);
+  }
+};
+
 export {
   createTask,
   updateTask,
   deleteTask,
   addNewGoalService,
   updateTaskStatusService,
+  updateTaskGoalStatusService,
 };

@@ -1,10 +1,7 @@
 import { Router } from 'express';
 import protectedByApiKey from '@core/middlewares/apiKey.middleware';
 // import validation from '@core/middlewares/validate.middleware';
-import {
-  handleCommunityCreation,
-  validManagerController,
-} from './manager.controller';
+import { handleCommunityCreation } from './manager.controller';
 
 const router: Router = Router();
 

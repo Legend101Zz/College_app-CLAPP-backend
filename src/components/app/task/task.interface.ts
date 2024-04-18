@@ -12,9 +12,10 @@ export interface AdditionalFields {
 }
 
 export interface Goal {
+  _id?: any;
   description: string;
   expectedTime: Date;
-  status: 'inProgress' | 'done' | 'notDone';
+  status: 'done' | 'notDone' | 'inProgress';
 }
 
 export interface ITask extends CommonTaskFields, Document {
