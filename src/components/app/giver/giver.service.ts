@@ -1,5 +1,4 @@
-// registerGiver.ts
-
+import { Types } from 'mongoose';
 import { User } from '../user/user.model';
 import GiverModel from './giver.model';
 // import TaskModel from '../task/task.model';
@@ -172,6 +171,31 @@ const read = async (
   }
 };
 
+const validateGiver = async (
+  taskId: string,
+  giverId: string,
+): Promise<boolean> => {
+  try {
+    // Check if the taskId and giverId are valid MongoDB ObjectIds
+    if (!Types.ObjectId.isValid(taskId) || !Types.ObjectId.isValid(giverId)) {
+      throw new Error('Invalid taskId or giverId');
+    }
+
+    // Find the giver with the provided giverId and check if it has the given taskId associated
+    const giver = await GiverModel.findOne({
+      _id: giverId,
+      Tasks: { $elemMatch: { taskId } },
+    });
+
+    // If giver is found with the taskId associated, return true
+    return !!giver;
+  } catch (error) {
+    throw new Error(
+      `Error validating giver's task association: ${error.message}`,
+    );
+  }
+};
+
 export type { GiverIncludeFields };
 export default {
   registerGiver,
@@ -181,4 +205,5 @@ export default {
   getGiverByUserId,
   getGiverByGiverId,
   read,
+  validateGiver,
 };

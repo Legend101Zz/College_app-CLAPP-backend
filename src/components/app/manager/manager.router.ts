@@ -12,14 +12,12 @@ router.get('/manager', (req, res) => {
   res.send('Manager route');
 });
 
-router.post('/manager/create-community', handleCommunityCreation);
-
 router.post(
   '/manager/create-community',
   [protectedByApiKey],
   handleCommunityCreation,
 );
 // router.get('/manager/valid/ ', validManagerController);
-// router.get('/validate-manager/:managerId/task/:taskId', validManagerController); //working
+// router.get('/validate-manager/task/:taskId', validManagerController); //working
 
 export default router;
