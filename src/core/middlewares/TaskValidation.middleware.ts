@@ -51,4 +51,4 @@ const validateGiverMiddleware = async (
   }
 };
 
-export default { validManagerMiddleware, validateGiverMiddleware };
+export { validManagerMiddleware, validateGiverMiddleware };

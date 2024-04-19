@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import validManagerMiddleware from "@core/middlewares/TaskValidation.middleware.ts"
+import { validManagerMiddleware } from '@core/middlewares/TaskValidation.middleware';
 
 import protectedByApiKey from '@core/middlewares/apiKey.middleware';
 // import validation from '@core/middlewares/validate.middleware';
@@ -13,7 +13,7 @@ router.get('/manager', (req, res) => {
 });
 
 router.post(
-  '/manager/create-community',
+  '/manager/create-community/:taskId',
   [protectedByApiKey, validManagerMiddleware],
   handleCommunityCreation,
 );
